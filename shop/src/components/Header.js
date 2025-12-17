@@ -1,6 +1,19 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Header() {
+    const { user } = useAuth();
+
+    const logged = (
+        <>
+            <li className="nav-item">
+                <Link className="nav-link" to="/contact">Create</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/logout">Logout</Link>
+            </li>
+        </>
+    );
     return (
         <header className="header_area">
             <div className="top_menu">
@@ -12,27 +25,6 @@ export default function Header() {
                                 <p>email: info@eiser.com</p>
                             </div>
                         </div>
-                        {/* <div className="col-lg-5">
-                            <div className="float-right">
-                                <ul className="right_side">
-                                    <li>
-                                        <a href="cart.html">
-                                            gift card
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tracking.html">
-                                            track order
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">
-                                            Contact Us
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>
@@ -100,32 +92,17 @@ export default function Header() {
                                         <li className="nav-item">
                                             <Link className="nav-link" to="/contact">Contact</Link>
                                         </li>
+                                        {Boolean(user.email) ? logged : ""}
                                     </ul>
                                 </div>
 
                                 <div className="col-lg-5 pr-0">
                                     <ul className="nav navbar-nav navbar-right right_nav pull-right">
-                                        <li className="nav-item">
-                                            <Link to="#" className="icons">
-                                                <i className="ti-search" aria-hidden="true"></i>
-                                            </Link>
-                                        </li>
+
 
                                         <li className="nav-item">
                                             <Link to="#" className="icons">
                                                 <i className="ti-shopping-cart"></i>
-                                            </Link>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <Link to="#" className="icons">
-                                                <i className="ti-user" aria-hidden="true"></i>
-                                            </Link>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <Link to="#" className="icons">
-                                                <i className="ti-heart" aria-hidden="true"></i>
                                             </Link>
                                         </li>
                                     </ul>
