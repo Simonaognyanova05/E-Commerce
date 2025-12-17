@@ -11,6 +11,7 @@ import Elements from "./components/Elements";
 import DetailsBlog from "./components/DetailsBlog";
 import DetailsProduct from "./components/DetailsProduct";
 import Tracking from "./components/Tracking";
+import Login from "./components/Login";
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
         <Route path="/detailsBlog" element={<DetailsBlog />} />
         <Route path="/detailsProduct" element={<DetailsProduct />} />
         <Route path="/tracking" element={<Tracking />} />
+        <Route path="/login" element={<Login />} />
+
 
 
 
