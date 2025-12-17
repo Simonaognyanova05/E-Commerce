@@ -101,7 +101,7 @@ export default function Header() {
 
 
                                         <li className="nav-item">
-                                            <Link to="#" className="icons">
+                                            <Link to="/cart" className="icons">
                                                 <i className="ti-shopping-cart"></i>
                                             </Link>
                                         </li>
