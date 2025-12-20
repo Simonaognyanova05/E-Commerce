@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ShopItem({product}) {
     return (
         <div className="col-lg-4 col-md-6">
@@ -9,18 +11,18 @@ export default function ShopItem({product}) {
                         alt=""
                     />
                     <div className="p_icon">
-                        <a href="#">
+                        <Link to={`/product/${product.id}`}>
                             <i className="ti-eye"></i>
-                        </a>
+                        </Link>
                         <a href="#">
                             <i className="ti-shopping-cart"></i>
                         </a>
                     </div>
                 </div>
                 <div className="product-btm">
-                    <a href="#" className="d-block">
+                    <Link to={`/product/${product.id}`} className="d-block">
                         <h4>{product.productName}</h4>
-                    </a>
+                    </Link>
                     <div className="mt-3">
                         <span className="mr-4">€ {product.price}</span>
                     </div>
