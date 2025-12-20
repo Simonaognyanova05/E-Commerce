@@ -1,8 +1,24 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { createProduct } from "../services/createProduct";
 
 export default function Create() {
     const navigate = useNavigate();
+
+    const createHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const productData = Object.fromEntries(formData);
+        console.log(productData);
+        
+
+        await createProduct(
+            productData
+        );
+        alert("Успешно създаване на продукт");
+        navigate('/');
+    }
 
     return (
         <section className="login_area section_gap">
@@ -12,7 +28,7 @@ export default function Create() {
                         <div className="login_form_inner p-4 shadow-sm bg-white rounded">
                             <h3 className="text-center mb-4">Създаване на продукт</h3>
 
-                            <form>
+                            <form onSubmit={createHandler}>
                                 <div className="form-group mb-3">
                                     <input
                                         type="text"
@@ -22,7 +38,7 @@ export default function Create() {
                                         required
                                     />
                                 </div>
-                                 <div className="form-group mb-3">
+                                <div className="form-group mb-3">
                                     <input
                                         type="text"
                                         name="category"
@@ -41,7 +57,7 @@ export default function Create() {
                                         required
                                     />
                                 </div>
-                                   <div className="form-group mb-3">
+                                <div className="form-group mb-3">
                                     <input
                                         type="number"
                                         name="price"
