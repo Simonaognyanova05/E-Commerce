@@ -4,7 +4,6 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Blog from "./components/Blog";
 import Cart from "./components/Cart";
-import Category from "./components/Category";
 import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
 import Elements from "./components/Elements";
@@ -14,6 +13,7 @@ import Tracking from "./components/Tracking";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Create from "./components/Create";
+import Shop from "./components/Shop/Shop";
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/elements" element={<Elements />} />

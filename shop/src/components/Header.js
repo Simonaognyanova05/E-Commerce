@@ -52,7 +52,7 @@ export default function Header() {
                                                 aria-expanded="false">Shop</Link>
                                             <ul className="dropdown-menu">
                                                 <li className="nav-item">
-                                                    <Link className="nav-link" to="/category">Shop Category</Link>
+                                                    <Link className="nav-link" to="/shop">Shop Category</Link>
                                                 </li>
                                                 <li className="nav-item">
                                                     <Link className="nav-link" to="/detailsProduct">Product Details</Link>
