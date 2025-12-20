@@ -1,4 +1,19 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "../../services/getProducts";
+import ShopItem from "./ShopItem";
+
 export default function Shop() {
+    let [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        getProducts()
+        .then(res => {
+            setProducts(res);
+        })
+        .catch(() => {
+            alert("Възникна грешка при зареждане на продуктите!");
+        })
+    }, [products]);
     return (
         <>
             <section className="banner_area">
@@ -34,7 +49,7 @@ export default function Shop() {
 
                             <div className="latest_product_inner">
                                 <div className="row">
-                                    
+                                    {products.map(x => <ShopItem key={x.id} product={x}/>)}
                                 </div>
                             </div>
                         </div>

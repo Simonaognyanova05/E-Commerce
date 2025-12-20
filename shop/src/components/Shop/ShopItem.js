@@ -1,11 +1,11 @@
-export default function ShopItem() {
+export default function ShopItem({product}) {
     return (
         <div className="col-lg-4 col-md-6">
             <div className="single-product">
                 <div className="product-img">
                     <img
                         className="card-img"
-                        src="img/product/inspired-product/i1.jpg"
+                        src={product.img1}
                         alt=""
                     />
                     <div className="p_icon">
@@ -19,10 +19,10 @@ export default function ShopItem() {
                 </div>
                 <div className="product-btm">
                     <a href="#" className="d-block">
-                        <h4>Latest men’s sneaker</h4>
+                        <h4>{product.productName}</h4>
                     </a>
                     <div className="mt-3">
-                        <span className="mr-4">$25.00</span>
+                        <span className="mr-4">€ {product.price}</span>
                     </div>
                 </div>
             </div>
