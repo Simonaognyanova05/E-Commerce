@@ -13,6 +13,7 @@ import DetailsProduct from "./components/DetailsProduct";
 import Tracking from "./components/Tracking";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import Create from "./components/Create";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/detailsBlog" element={<DetailsBlog />} />
         <Route path="/detailsProduct" element={<DetailsProduct />} />
         <Route path="/tracking" element={<Tracking />} />
+        <Route path="/createProduct" element={<Create />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
 

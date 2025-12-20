@@ -7,7 +7,7 @@ export default function Header() {
     const logged = (
         <>
             <li className="nav-item">
-                <Link className="nav-link" to="/contact">Create</Link>
+                <Link className="nav-link" to="/createProduct">Create</Link>
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="/logout">Logout</Link>
