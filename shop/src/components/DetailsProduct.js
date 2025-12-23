@@ -4,6 +4,7 @@ import { db } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { getProductById } from "../services/getProductById";
+import { addToCart } from "../services/addToCart";
 
 export default function DetailsProduct() {
     const navigate = useNavigate();
@@ -42,7 +43,15 @@ export default function DetailsProduct() {
         }
     };
 
-
+    const handleAddToCart = async () => {
+        try {
+            await addToCart(details, quantity);
+            alert("Product added to cart 🛒");
+        } catch (error) {
+            console.error(error);
+            alert("Error adding to cart");
+        }
+    };
 
     return (
         <>
@@ -118,7 +127,7 @@ export default function DetailsProduct() {
                                 </div>
 
                                 <div className="card_area">
-                                    <button className="main_btn">Add to Cart</button>
+                                    <button onClick={handleAddToCart} className="main_btn">Add to Cart</button>
                                     <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
                                     <button onClick={() => handleDelete(details.id)} className="main_btn">Delete</button>
                                 </div>
