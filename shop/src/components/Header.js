@@ -14,6 +14,17 @@ export default function Header() {
             </li>
         </>
     );
+
+    const unlogged = (
+        <>
+            <li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/register">Register</Link>
+            </li>
+        </>
+    )
     return (
         <header className="header_area">
             <div className="top_menu">
@@ -92,19 +103,24 @@ export default function Header() {
                                         <li className="nav-item">
                                             <Link className="nav-link" to="/contact">Contact</Link>
                                         </li>
-                                        {Boolean(user.email) ? logged : ""}
+                                        {Boolean(user.email) ? logged : unlogged}
                                     </ul>
                                 </div>
 
                                 <div className="col-lg-5 pr-0">
                                     <ul className="nav navbar-nav navbar-right right_nav pull-right">
+                                        {
+                                            Boolean(user.email)
+                                                ?
+                                                <li className="nav-item">
+                                                    <Link to="/cart" className="icons">
+                                                        <i className="ti-shopping-cart"></i>
+                                                    </Link>
+                                                </li>
+                                                : ""
+                                        }
 
 
-                                        <li className="nav-item">
-                                            <Link to="/cart" className="icons">
-                                                <i className="ti-shopping-cart"></i>
-                                            </Link>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
