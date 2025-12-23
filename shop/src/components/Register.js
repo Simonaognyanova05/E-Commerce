@@ -1,12 +1,31 @@
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import { register } from "../services/register";
 
 export default function Register() {
     const navigate = useNavigate();
-    const { onLogin } = useAuth();
+    const { onRegister } = useAuth();
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const { email, password, rePass } = Object.fromEntries(formData);
+
+        if (password !== rePass) {
+            alert("Паролите не съвпадат!");
+            return;
+        };
+
+        try {
+            const result = await register(email, password);
+            onRegister(result);
+            alert("Успешна регистрация!");
+            navigate('/');
+        } catch (err) {
+            alert(err.message);
+        }
+
     }
     return (
         <section className="login_area section_gap">
@@ -37,7 +56,7 @@ export default function Register() {
                                     />
                                 </div>
 
-                                
+
                                 <div className="form-group mb-3">
                                     <input
                                         type="password"
