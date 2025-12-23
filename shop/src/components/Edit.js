@@ -1,22 +1,45 @@
-import { useNavigate } from "react-router-dom";
-import { createProduct } from "../services/createProduct";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProductById } from "../services/getProductById";
+import { editProduct } from "../services/editProduct";
 
-export default function Create() {
+
+export default function Edit() {
     const navigate = useNavigate();
+    const { id } = useParams();
 
-    const createHandler = async (e) => {
+    const [product, setProduct] = useState({
+        productName: "",
+        category: "",
+        description: "",
+        price: "",
+        img1: "",
+        img2: "",
+        img3: "",
+    });
+
+    useEffect(() => {
+        const fetchOffer = async () => {
+            try {
+                const data = await getProductById(id);
+                if (data) setProduct(data);
+            } catch (err) {
+                console.error("Error loading article:", err);
+                alert("Failed to load information.");
+            }
+        };
+        fetchOffer();
+    }, [id]);
+
+    const editHandler = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const productData = Object.fromEntries(formData);
-        console.log(productData);
-        
+        let formData = new FormData(e.currentTarget);
+        const updatedData = Object.fromEntries(formData);
 
-        await createProduct(
-            productData
-        );
-        alert("Успешно създаване на продукт");
-        navigate('/');
+        await editProduct(id, updatedData);
+        alert("Продуктът е редактиран успешно!");
+        navigate('/shop');
     }
 
     return (
@@ -25,15 +48,16 @@ export default function Create() {
                 <div className="row justify-content-center">
                     <div className="col-lg-5 col-md-7 col-sm-10">
                         <div className="login_form_inner p-4 shadow-sm bg-white rounded">
-                            <h3 className="text-center mb-4">Създаване на продукт</h3>
+                            <h3 className="text-center mb-4">Редактиране на продукт</h3>
 
-                            <form onSubmit={createHandler}>
+                            <form onSubmit={editHandler}>
                                 <div className="form-group mb-3">
                                     <input
                                         type="text"
                                         name="productName"
                                         className="form-control"
                                         placeholder="Име на продукт"
+                                        defaultValue={product.productName}
                                         required
                                     />
                                 </div>
@@ -43,6 +67,7 @@ export default function Create() {
                                         name="category"
                                         className="form-control"
                                         placeholder="Категория"
+                                        defaultValue={product.category}
                                         required
                                     />
                                 </div>
@@ -53,6 +78,7 @@ export default function Create() {
                                         name="description"
                                         className="form-control"
                                         placeholder="Описание на продукта"
+                                        defaultValue={product.description}
                                         required
                                     />
                                 </div>
@@ -62,6 +88,7 @@ export default function Create() {
                                         name="price"
                                         className="form-control"
                                         placeholder="Цена"
+                                        defaultValue={product.price}
                                         required
                                     />
                                 </div>
@@ -71,6 +98,7 @@ export default function Create() {
                                         name="img1"
                                         className="form-control"
                                         placeholder="Линк към снимка 1"
+                                        defaultValue={product.img1}
                                         required
                                     />
                                 </div>
@@ -80,6 +108,7 @@ export default function Create() {
                                         name="img2"
                                         className="form-control"
                                         placeholder="Линк към снимка 2"
+                                        defaultValue={product.img2}
                                         required
                                     />
                                 </div>
@@ -89,6 +118,7 @@ export default function Create() {
                                         name="img3"
                                         className="form-control"
                                         placeholder="Линк към снимка 3"
+                                        defaultValue={product.img3}
                                         required
                                     />
                                 </div>
@@ -98,7 +128,7 @@ export default function Create() {
                                         type="submit"
                                         className="main_btn w-100"
                                     >
-                                        Създаване
+                                        Редактиране
                                     </button>
                                 </div>
                             </form>

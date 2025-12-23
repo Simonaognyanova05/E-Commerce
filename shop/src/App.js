@@ -14,6 +14,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Create from "./components/Create";
 import Shop from "./components/Shop/Shop";
+import Edit from "./components/Edit";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/elements" element={<Elements />} />
         <Route path="/detailsBlog" element={<DetailsBlog />} />
         <Route path="/product/:productId" element={<DetailsProduct />} />
+        <Route path="/editProduct/:id" element={<Edit />} />
         <Route path="/tracking" element={<Tracking />} />
         <Route path="/createProduct" element={<Create />} />
         <Route path="/login" element={<Login />} />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getProductById } from "../services/getProductById";
 
 export default function DetailsProduct() {
@@ -100,6 +100,8 @@ export default function DetailsProduct() {
 
                                 <div className="card_area">
                                     <button className="main_btn">Add to Cart</button>
+                                    <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
+                                    <Link className="main_btn">Delete</Link>
                                 </div>
                             </div>
                         </div>
