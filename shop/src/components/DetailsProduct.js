@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { getProductById } from "../services/getProductById";
 
 export default function DetailsProduct() {
+    const navigate = useNavigate();
     const { productId } = useParams();
     const [details, setDetails] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -21,6 +25,24 @@ export default function DetailsProduct() {
 
     const increaseQty = () => setQuantity((q) => q + 1);
     const decreaseQty = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
+
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this product?"
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            await deleteDoc(doc(db, "products", id));
+            navigate("/shop");
+        } catch (error) {
+            console.error("Delete error:", error);
+            alert("An error occurred while deleting the product!");
+        }
+    };
+
+
 
     return (
         <>
@@ -65,9 +87,6 @@ export default function DetailsProduct() {
                                     <li>
                                         <span>Category</span> : Household
                                     </li>
-                                    <li>
-                                        <span>Availability</span> : In Stock
-                                    </li>
                                 </ul>
 
                                 <p>{details.description}</p>
@@ -101,7 +120,7 @@ export default function DetailsProduct() {
                                 <div className="card_area">
                                     <button className="main_btn">Add to Cart</button>
                                     <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
-                                    <Link className="main_btn">Delete</Link>
+                                    <button onClick={() => handleDelete(details.id)} className="main_btn">Delete</button>
                                 </div>
                             </div>
                         </div>
