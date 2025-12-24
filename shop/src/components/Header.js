@@ -3,16 +3,23 @@ import { useAuth } from '../contexts/AuthContext';
 
 export default function Header() {
     const { user } = useAuth();
+    let isAdmin = false;
 
+    if (user.email === "simonaognanova05@gmail.com") {
+        isAdmin = true;
+    } else {
+        isAdmin = false;
+    };
+    
+    const adminLogged = (
+        <li className="nav-item">
+            <Link className="nav-link" to="/createProduct">Create</Link>
+        </li>
+    );
     const logged = (
-        <>
-            <li className="nav-item">
-                <Link className="nav-link" to="/createProduct">Create</Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link" to="/logout">Logout</Link>
-            </li>
-        </>
+        <li className="nav-item">
+            <Link className="nav-link" to="/logout">Logout</Link>
+        </li>
     );
 
     const unlogged = (
@@ -104,6 +111,8 @@ export default function Header() {
                                             <Link className="nav-link" to="/contact">Contact</Link>
                                         </li>
                                         {Boolean(user.email) ? logged : unlogged}
+                                        {isAdmin ? adminLogged : ""}
+
                                     </ul>
                                 </div>
 
