@@ -50,14 +50,20 @@ export default function DetailsProduct() {
     };
 
     const handleAddToCart = async () => {
+        if (!user) {
+            alert("You must be logged in to add products to cart");
+            return;
+        }
+
         try {
-            await addToCart(details, quantity);
+            await addToCart(user.uid, details, quantity);
             alert("Product added to cart 🛒");
         } catch (error) {
             console.error(error);
             alert("Error adding to cart");
         }
     };
+
 
     const loggedUser = (
         <button onClick={handleAddToCart} className="main_btn">Add to Cart</button>

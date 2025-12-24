@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
-export default function ShopItem({product}) {
+export default function ShopItem({ product }) {
+    const { user } = useAuth();
+
+
     return (
         <div className="col-lg-4 col-md-6">
             <div className="single-product">
@@ -14,9 +18,14 @@ export default function ShopItem({product}) {
                         <Link to={`/product/${product.id}`}>
                             <i className="ti-eye"></i>
                         </Link>
-                        <a href="#">
-                            <i className="ti-shopping-cart"></i>
-                        </a>
+                        {
+                            Boolean(user.email)
+                                ? <a href="#">
+                                    <i className="ti-shopping-cart"></i>
+                                </a>
+                                : ""
+                        }
+
                     </div>
                 </div>
                 <div className="product-btm">
