@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { checkIfAdmin } from '../services/checkIfAdmin';
 
 export default function Header() {
     const { user } = useAuth();
-    let isAdmin = false;
+    let isAdmin = checkIfAdmin(user);
 
-    if (user.email === "simonaognanova05@gmail.com") {
-        isAdmin = true;
-    } else {
-        isAdmin = false;
-    };
-    
     const adminLogged = (
         <li className="nav-item">
             <Link className="nav-link" to="/createProduct">Create</Link>
