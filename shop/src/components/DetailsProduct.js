@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { getProductById } from "../services/getProductById";
 import { addToCart } from "../services/addToCart";
+import { useAuth } from "../contexts/AuthContext";
+import { checkIfAdmin } from "../services/checkIfAdmin";
 
 export default function DetailsProduct() {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const { productId } = useParams();
     const [details, setDetails] = useState(null);
     const [quantity, setQuantity] = useState(1);
+
+    let isAdmin = checkIfAdmin(user);
+
 
     useEffect(() => {
         getProductById(productId)
@@ -52,6 +58,17 @@ export default function DetailsProduct() {
             alert("Error adding to cart");
         }
     };
+
+    const loggedUser = (
+        <button onClick={handleAddToCart} className="main_btn">Add to Cart</button>
+    );
+
+    const loggedAdmin = (
+        <>
+            <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
+            <button onClick={() => handleDelete(details.id)} className="main_btn">Delete</button>
+        </>
+    );
 
     return (
         <>
@@ -127,9 +144,8 @@ export default function DetailsProduct() {
                                 </div>
 
                                 <div className="card_area">
-                                    <button onClick={handleAddToCart} className="main_btn">Add to Cart</button>
-                                    <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
-                                    <button onClick={() => handleDelete(details.id)} className="main_btn">Delete</button>
+                                    {Boolean(user.email) ? loggedUser : ""}
+                                    {isAdmin ? loggedAdmin : ""}
                                 </div>
                             </div>
                         </div>
