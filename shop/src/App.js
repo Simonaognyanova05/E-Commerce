@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Blog from "./components/Blog";
-import Cart from "./components/Cart";
+import Cart from "./components/Cart/Cart";
 import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
 import Elements from "./components/Elements";
