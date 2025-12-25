@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { getUserCart } from "../services/getUserCart";
 import { createOrder } from "../services/createOrder";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -43,9 +45,7 @@ export default function Checkout() {
         try {
             setIsSubmitting(true);
             const orderId = await createOrder(user, cartItems);
-            alert(`Благодарим Ви за поръчката! Номер: ${orderId}`);
-            // тук по желание:
-            // navigate("/order-success");
+            navigate("/order-success");
         } catch (err) {
             console.error(err);
             alert(err.message);

@@ -16,6 +16,7 @@ import Create from "./components/Create";
 import Shop from "./components/Shop/Shop";
 import Edit from "./components/Edit";
 import Register from "./components/Register";
+import OrderSuccess from "./components/OrderSuccess";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/tracking" element={<Tracking />} />
         <Route path="/createProduct" element={<Create />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
 
