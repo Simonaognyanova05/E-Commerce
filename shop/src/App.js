@@ -17,6 +17,7 @@ import Shop from "./components/Shop/Shop";
 import Edit from "./components/Edit";
 import Register from "./components/Register";
 import OrderSuccess from "./components/OrderSuccess";
+import Orders from "./components/Orders";
 
 
 function App() {
@@ -36,8 +37,9 @@ function App() {
         <Route path="/editProduct/:id" element={<Edit />} />
         <Route path="/tracking" element={<Tracking />} />
         <Route path="/createProduct" element={<Create />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
 

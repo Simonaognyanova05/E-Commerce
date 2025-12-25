@@ -7,9 +7,14 @@ export default function Header() {
     let isAdmin = checkIfAdmin(user);
 
     const adminLogged = (
-        <li className="nav-item">
-            <Link className="nav-link" to="/createProduct">Create</Link>
-        </li>
+        <>
+            <li className="nav-item">
+                <Link className="nav-link" to="/createProduct">Create</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/orders">Orders</Link>
+            </li>
+        </>
     );
     const logged = (
         <li className="nav-item">
