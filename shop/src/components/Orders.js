@@ -1,4 +1,47 @@
+import { useEffect, useState } from "react";
+import { getAllOrders } from "../services/getAllOrders";
+import { updateOrderStatus } from "../services/updateOrderStatus";
+
 export default function Orders() {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getAllOrders()
+            .then(res => {
+                setOrders(res);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, []);
+
+    const handleStatusChange = async (orderId, status) => {
+        try {
+            await updateOrderStatus(orderId, status);
+
+            setOrders(state =>
+                state.map(o =>
+                    o.id === orderId ? { ...o, status } : o
+                )
+            );
+        } catch (err) {
+            console.error(err);
+            alert("Грешка при смяна на статус");
+        }
+    };
+
+    const formatDate = (timestamp) => {
+        if (!timestamp) return "-";
+        return new Date(timestamp.seconds * 1000).toLocaleDateString();
+    };
+
+    if (loading) {
+        return <p style={{ textAlign: "center" }}>Loading orders...</p>;
+    }
+
     return (
         <>
             <section className="banner_area">
@@ -25,6 +68,10 @@ export default function Orders() {
                             <div className="order_box">
                                 <h3>Orders List</h3>
 
+                                {orders.length === 0 && (
+                                    <p>No orders yet.</p>
+                                )}
+
                                 <div className="table-responsive">
                                     <table className="table">
                                         <thead>
@@ -39,60 +86,62 @@ export default function Orders() {
                                         </thead>
 
                                         <tbody>
-                                            {/* Order row */}
-                                            <tr>
-                                                <td>#ORD-001</td>
-                                                <td>user@email.com</td>
-                                                <td>2025-01-10</td>
-                                                <td>€ 54</td>
-                                                <td>
-                                                    <span className="badge badge-warning">
-                                                        Pending
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#" className="genric-btn info small">
-                                                        Завършена
-                                                    </a>
-                                                    <a href="#" className="genric-btn info small">
-                                                        Отказана
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            {orders.map(order => (
+                                                <tr key={order.id}>
+                                                    <td>{order.id}</td>
+                                                    <td>{order.email}</td>
+                                                    <td>{formatDate(order.createdAt)}</td>
+                                                    <td>€ {order.total}</td>
+                                                    <td>
+                                                        {order.status === "pending" && (
+                                                            <span className="badge badge-warning">
+                                                                Pending
+                                                            </span>
+                                                        )}
+                                                        {order.status === "completed" && (
+                                                            <span className="badge badge-success">
+                                                                Completed
+                                                            </span>
+                                                        )}
+                                                        {order.status === "cancelled" && (
+                                                            <span className="badge badge-danger">
+                                                                Cancelled
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {order.status === "pending" && (
+                                                            <>
+                                                                <a
+                                                                    href="#"
+                                                                    className="genric-btn success small"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        handleStatusChange(order.id, "completed");
+                                                                    }}
+                                                                >
+                                                                    Завършена
+                                                                </a>
 
-                                            <tr>
-                                                <td>#ORD-002</td>
-                                                <td>admin@email.com</td>
-                                                <td>2025-01-11</td>
-                                                <td>€ 120</td>
-                                                <td>
-                                                    <span className="badge badge-success">
-                                                        Completed
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#" className="genric-btn info small">
-                                                        View
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                                <a
+                                                                    href="#"
+                                                                    className="genric-btn danger small"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        handleStatusChange(order.id, "cancelled");
+                                                                    }}
+                                                                >
+                                                                    Отказана
+                                                                </a>
+                                                            </>
+                                                        )}
 
-                                            <tr>
-                                                <td>#ORD-003</td>
-                                                <td>client@email.com</td>
-                                                <td>2025-01-12</td>
-                                                <td>€ 34</td>
-                                                <td>
-                                                    <span className="badge badge-danger">
-                                                        Cancelled
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#" className="genric-btn info small">
-                                                        View
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                        {order.status !== "pending" && (
+                                                            <span>-</span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
