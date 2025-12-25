@@ -2,7 +2,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const createOrder = async (user, cartItems) => {
-    if (!user) {
+    if (!user || !user.uid) {
         throw new Error("User is not authenticated");
     }
 
@@ -20,13 +20,13 @@ export const createOrder = async (user, cartItems) => {
 
     const order = {
         userId: user.uid,
-        email: user.email,
+        email: user.email || "",
         items: cartItems.map(item => ({
-            productId: item.productId,
+            productId: item.id, // ВАЖНО
             productName: item.productName,
             price: Number(item.price),
             quantity: Number(item.quantity),
-            img: item.img
+            img: item.img || ""
         })),
         subtotal,
         shipping,
@@ -36,6 +36,5 @@ export const createOrder = async (user, cartItems) => {
     };
 
     const docRef = await addDoc(collection(db, "orders"), order);
-
     return docRef.id;
 };

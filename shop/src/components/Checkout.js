@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { getUserCart } from "../services/getUserCart";
 import { createOrder } from "../services/createOrder";
+import { clearUserCart } from "../services/clearUserCart";
 import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
@@ -16,7 +17,7 @@ export default function Checkout() {
 
         getUserCart(user.uid)
             .then(res => {
-                setCartItems(res);
+                setCartItems(res || []);
                 setLoading(false);
             })
             .catch(err => {
@@ -41,14 +42,27 @@ export default function Checkout() {
     const shipping = subtotal > 0 ? 4 : 0;
     const total = subtotal + shipping;
 
-    const handleCheckout = async () => {
+    const handleCheckout = async (e) => {
+        e.preventDefault();
+
+        if (isSubmitting) return;
+
+        if (!cartItems.length) {
+            alert("Количката е празна");
+            return;
+        }
+
         try {
             setIsSubmitting(true);
-            const orderId = await createOrder(user, cartItems);
+
+            await createOrder(user, cartItems);
+
+            await clearUserCart(user.uid);
+
             navigate("/order-success");
         } catch (err) {
-            console.error(err);
-            alert(err.message);
+            console.error("Checkout error:", err);
+            alert(err.message || "Грешка при завършване на поръчката");
         } finally {
             setIsSubmitting(false);
         }
@@ -79,8 +93,7 @@ export default function Checkout() {
                         <div className="row">
                             <div className="col-lg-8">
                                 <h3>Billing Details</h3>
-                                <form className="row contact_form">
-                                </form>
+                                <form className="row contact_form"></form>
                             </div>
 
                             <div className="col-lg-4">
