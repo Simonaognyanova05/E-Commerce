@@ -1,4 +1,5 @@
 import CartItem from "./CartItem";
+import {Link} from "react-router-dom";
 import { useAuth } from '../../contexts/AuthContext';
 import { useEffect, useState } from "react";
 import { getUserCart } from "../../services/getUserCart";
@@ -70,8 +71,8 @@ export default function Cart() {
                                         <td></td>
                                         <td>
                                             <div className="checkout_btn_inner">
-                                                <a className="gray_btn" href="#">Continue Shopping</a>
-                                                <a className="main_btn" href="#">Proceed to checkout</a>
+                                                <Link className="gray_btn" to="/shop">Continue Shopping</Link>
+                                                <Link className="main_btn" to="/checkout">Proceed to checkout</Link>
                                             </div>
                                         </td>
                                     </tr>
