@@ -1,40 +1,50 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-export const createOrder = async (user, cartItems) => {
-    if (!user || !user.uid) {
+export const createOrder = async ({
+    userId,
+    email,
+    items,
+    shippingData,
+    subtotal,
+    shipping,
+    total,
+}) => {
+    if (!userId) {
         throw new Error("User is not authenticated");
     }
 
-    if (!cartItems || cartItems.length === 0) {
+    if (!items || items.length === 0) {
         throw new Error("Cart is empty");
     }
 
-    const subtotal = cartItems.reduce(
-        (sum, item) => sum + Number(item.price) * Number(item.quantity),
-        0
-    );
-
-    const shipping = subtotal > 0 ? 50 : 0;
-    const total = subtotal + shipping;
-
     const order = {
-        userId: user.uid,
-        email: user.email || "",
-        items: cartItems.map(item => ({
-            productId: item.id, // ВАЖНО
+        userId,
+        email,
+        items: items.map(item => ({
+            productId: item.productId || item.id,
             productName: item.productName,
             price: Number(item.price),
             quantity: Number(item.quantity),
-            img: item.img || ""
+            img: item.img || "",
         })),
-        subtotal,
-        shipping,
-        total,
+        shippingData: {
+            firstName: shippingData.firstName,
+            lastName: shippingData.lastName,
+            phone: shippingData.phone,
+            email: shippingData.email,
+            address: shippingData.address,
+            city: shippingData.city,
+            zip: shippingData.zip,
+        },
+        subtotal: Number(subtotal),
+        shipping: Number(shipping),
+        total: Number(total),
         status: "pending",
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
     };
 
     const docRef = await addDoc(collection(db, "orders"), order);
+
     return docRef.id;
 };

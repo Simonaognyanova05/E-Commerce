@@ -8,9 +8,21 @@ import { useNavigate } from "react-router-dom";
 export default function Checkout() {
     const navigate = useNavigate();
     const { user } = useAuth();
+
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // 📦 Данни за доставка
+    const [shippingData, setShippingData] = useState({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        address: "",
+        city: "",
+        zip: "",
+    });
 
     useEffect(() => {
         if (!user) return;
@@ -42,6 +54,13 @@ export default function Checkout() {
     const shipping = subtotal > 0 ? 4 : 0;
     const total = subtotal + shipping;
 
+    const onChangeHandler = (e) => {
+        setShippingData(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }));
+    };
+
     const handleCheckout = async (e) => {
         e.preventDefault();
 
@@ -52,10 +71,26 @@ export default function Checkout() {
             return;
         }
 
+        // 🛑 basic validation
+        for (let key in shippingData) {
+            if (!shippingData[key]) {
+                alert("Моля, попълнете всички данни за доставка");
+                return;
+            }
+        }
+
         try {
             setIsSubmitting(true);
 
-            await createOrder(user, cartItems);
+            await createOrder({
+                userId: user.uid,
+                email: user.email,
+                items: cartItems,
+                shippingData,
+                subtotal,
+                shipping,
+                total,
+            });
 
             await clearUserCart(user.uid);
 
@@ -93,7 +128,85 @@ export default function Checkout() {
                         <div className="row">
                             <div className="col-lg-8">
                                 <h3>Billing Details</h3>
-                                <form className="row contact_form"></form>
+
+                                <form className="row contact_form">
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="firstName"
+                                            placeholder="First name"
+                                            value={shippingData.firstName}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="lastName"
+                                            placeholder="Last name"
+                                            value={shippingData.lastName}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="phone"
+                                            placeholder="Phone"
+                                            value={shippingData.phone}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            name="email"
+                                            placeholder="Email"
+                                            value={shippingData.email}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-12 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="address"
+                                            placeholder="Address"
+                                            value={shippingData.address}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="city"
+                                            placeholder="City"
+                                            value={shippingData.city}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="zip"
+                                            placeholder="ZIP Code"
+                                            value={shippingData.zip}
+                                            onChange={onChangeHandler}
+                                        />
+                                    </div>
+                                </form>
                             </div>
 
                             <div className="col-lg-4">
@@ -112,9 +225,7 @@ export default function Checkout() {
                                             <li key={item.id}>
                                                 <a href="#">
                                                     {item.productName}
-                                                    <span className="middle">
-                                                        x {item.quantity}
-                                                    </span>
+                                                    <span className="middle">x {item.quantity}</span>
                                                     <span className="last">
                                                         € {Number(item.price) * Number(item.quantity)}
                                                     </span>
@@ -125,22 +236,13 @@ export default function Checkout() {
 
                                     <ul className="list list_2">
                                         <li>
-                                            <a href="#">
-                                                Subtotal
-                                                <span>€ {subtotal}</span>
-                                            </a>
+                                            <a href="#">Subtotal <span>€ {subtotal}</span></a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                Shipping
-                                                <span>Flat rate: € {shipping}</span>
-                                            </a>
+                                            <a href="#">Shipping <span>€ {shipping}</span></a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                Total
-                                                <span>€ {total}</span>
-                                            </a>
+                                            <a href="#">Total <span>€ {total}</span></a>
                                         </li>
                                     </ul>
 
