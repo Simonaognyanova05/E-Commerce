@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { checkIfAdmin } from '../services/checkIfAdmin';
+import './Header.css';
+import { useAuth } from '../../contexts/AuthContext';
+import { checkIfAdmin } from '../../services/checkIfAdmin';
 
 export default function Header() {
     const { user } = useAuth();
@@ -50,7 +51,7 @@ export default function Header() {
                 <div className="container">
                     <nav className="navbar navbar-expand-lg navbar-light w-100">
                         <Link className="navbar-brand logo_h" to="index.html">
-                            <img src="img/logo.png" alt="" />
+                            <img src="img/logo.png" style={{ height: "40px", width: "40px" }} alt="" />
                         </Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,22 +117,20 @@ export default function Header() {
                                     </ul>
                                 </div>
 
-                                <div className="col-lg-5 pr-0">
-                                    <ul className="nav navbar-nav navbar-right right_nav pull-right">
-                                        {
-                                            Boolean(user.email)
-                                                ?
-                                                <li className="nav-item">
-                                                    <Link to="/cart" className="icons">
-                                                        <i className="ti-shopping-cart"></i>
-                                                    </Link>
-                                                </li>
-                                                : ""
-                                        }
-
-
+                                <div className="col-lg-5 pr-0 d-flex justify-content-end">
+                                    <ul className="nav navbar-nav navbar-right right_nav">
+                                        {Boolean(user.email) && (
+                                            <li className="nav-item">
+                                                <Link to="/cart" className="icons">
+                                                    <i className="ti-shopping-cart"></i>
+                                                </Link>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
+
+
+
                             </div>
                         </div>
                     </nav>

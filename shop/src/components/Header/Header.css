@@ -1,0 +1,13 @@
+.navbar-nav {
+    flex-wrap: nowrap;
+}
+
+.center_nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.center_nav .nav-item {
+    white-space: nowrap;
+}
