@@ -9,7 +9,7 @@ export default function Orders() {
     useEffect(() => {
         getAllOrders()
             .then(res => {
-                setOrders(res);
+                setOrders(res || []);
                 setLoading(false);
             })
             .catch(err => {
@@ -81,7 +81,7 @@ export default function Orders() {
                                                 <th>Date</th>
                                                 <th>Total</th>
                                                 <th>Status</th>
-                                                <th>Details</th>
+                                                <th>Delivery / Actions</th>
                                             </tr>
                                         </thead>
 
@@ -109,36 +109,56 @@ export default function Orders() {
                                                             </span>
                                                         )}
                                                     </td>
+
                                                     <td>
-                                                        {order.status === "pending" && (
-                                                            <>
-                                                                <a
-                                                                    href="#"
-                                                                    className="genric-btn success small"
-                                                                    onClick={(e) => {
-                                                                        e.preventDefault();
-                                                                        handleStatusChange(order.id, "completed");
-                                                                    }}
-                                                                >
-                                                                    Завършена
-                                                                </a>
+                                                        <div style={{ fontSize: "14px", lineHeight: "1.4" }}>
+                                                            <strong>Delivery Info</strong>
+                                                            <br />
 
-                                                                <a
-                                                                    href="#"
-                                                                    className="genric-btn danger small"
-                                                                    onClick={(e) => {
-                                                                        e.preventDefault();
-                                                                        handleStatusChange(order.id, "cancelled");
-                                                                    }}
-                                                                >
-                                                                    Отказана
-                                                                </a>
-                                                            </>
-                                                        )}
+                                                            {order.shippingData ? (
+                                                                <>
+                                                                    {order.shippingData.firstName} {order.shippingData.lastName}
+                                                                    <br />
+                                                                    📞 {order.shippingData.phone}
+                                                                    <br />
+                                                                    📍 {order.shippingData.address}
+                                                                    <br />
+                                                                    {order.shippingData.city}, {order.shippingData.zip}
+                                                                </>
+                                                            ) : (
+                                                                <span>-</span>
+                                                            )}
 
-                                                        {order.status !== "pending" && (
-                                                            <span>-</span>
-                                                        )}
+                                                            <hr />
+
+                                                            {order.status === "pending" ? (
+                                                                <>
+                                                                    <a
+                                                                        href="#"
+                                                                        className="genric-btn success small"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            handleStatusChange(order.id, "completed");
+                                                                        }}
+                                                                    >
+                                                                        Завършена
+                                                                    </a>
+
+                                                                    <a
+                                                                        href="#"
+                                                                        className="genric-btn danger small"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            handleStatusChange(order.id, "cancelled");
+                                                                        }}
+                                                                    >
+                                                                        Отказана
+                                                                    </a>
+                                                                </>
+                                                            ) : (
+                                                                <span>-</span>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
