@@ -49,8 +49,8 @@ export default function Header() {
             <div className="main_menu">
                 <div className="container">
                     <nav className="navbar navbar-expand-lg navbar-light w-100">
-                        <Link className="navbar-brand logo_h" to="index.html">
-                            <img src="img/logo.png"  style={{ height: "60px", width: "60px" }} alt="" />
+                        <Link className="navbar-brand logo_h" to="/">
+                            <img src="img/logo.png" style={{ height: "60px", width: "60px" }} alt="" />
                         </Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,23 +65,8 @@ export default function Header() {
                                         <li className="nav-item active">
                                             <Link className="nav-link" to="/">Home</Link>
                                         </li>
-                                        <li className="nav-item submenu dropdown">
-                                            <Link to="/elements" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                aria-expanded="false">Shop</Link>
-                                            <ul className="dropdown-menu">
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/shop">Shop Category</Link>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/detailsProduct">Product Details</Link>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/checkout">Product Checkout</Link>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/cart">Shopping Cart</Link>
-                                                </li>
-                                            </ul>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/shop">Shop</Link>
                                         </li>
                                         <li className="nav-item submenu dropdown">
                                             <Link to="/blog" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
