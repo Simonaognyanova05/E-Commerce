@@ -1,0 +1,48 @@
+.admin-message {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid transparent;
+}
+
+/* TYPES */
+.admin-message-success {
+    background: #eafaf1;
+    color: #1e7e34;
+    border-left-color: #28a745;
+}
+
+.admin-message-error {
+    background: #fdecea;
+    color: #a71d2a;
+    border-left-color: #dc3545;
+}
+
+.admin-message-warning {
+    background: #fff8e5;
+    color: #8a6d3b;
+    border-left-color: #ffc107;
+}
+
+.admin-message-info {
+    background: #e9f2ff;
+    color: #004085;
+    border-left-color: #007bff;
+}
+
+.admin-message-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.admin-message-close:hover {
+    opacity: 1;
+}
