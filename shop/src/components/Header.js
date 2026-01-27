@@ -9,29 +9,29 @@ export default function Header() {
     const adminLogged = (
         <>
             <li className="nav-item">
-                <Link className="nav-link" to="/createProduct">Create</Link>
+                <Link className="nav-link" to="/createProduct">Създаване</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/orders">Orders</Link>
+                <Link className="nav-link" to="/orders">Поръчки</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/adminMessages">Messages</Link>
+                <Link className="nav-link" to="/adminMessages">Съобщения</Link>
             </li>
         </>
     );
     const logged = (
         <li className="nav-item">
-            <Link className="nav-link" to="/logout">Logout</Link>
+            <Link className="nav-link" to="/logout">Изход</Link>
         </li>
     );
 
     const unlogged = (
         <>
             <li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
+                <Link className="nav-link" to="/login">Влизане</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/register">Register</Link>
+                <Link className="nav-link" to="/register">Регистрация</Link>
             </li>
         </>
     )
@@ -42,8 +42,8 @@ export default function Header() {
                     <div className="row">
                         <div className="col-lg-7">
                             <div className="float-left">
-                                <p>Phone: +01 256 25 235</p>
-                                <p>email: info@eiser.com</p>
+                                <p>Телефон: +0897372104</p>
+                                <p>Имейл: pointsmart909@gmail.com</p>
                             </div>
                         </div>
                     </div>
@@ -66,10 +66,10 @@ export default function Header() {
                                 <div className="col-lg-7 pr-0">
                                     <ul className="nav navbar-nav center_nav pull-right">
                                         <li className="nav-item active">
-                                            <Link className="nav-link" to="/">Home</Link>
+                                            <Link className="nav-link" to="/">Начало</Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="/shop">Shop</Link>
+                                            <Link className="nav-link" to="/shop">Продукти</Link>
                                         </li>
                                         {/* <li className="nav-item submenu dropdown">
                                             <Link to="/blog" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -84,7 +84,7 @@ export default function Header() {
                                             </ul>
                                         </li> */}
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="/contact">Contact</Link>
+                                            <Link className="nav-link" to="/contact">Контакти</Link>
                                         </li>
                                         {Boolean(user.email) ? logged : unlogged}
                                         {isAdmin ? adminLogged : ""}

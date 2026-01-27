@@ -39,11 +39,11 @@ export default function Checkout() {
     }, [user]);
 
     if (!user) {
-        return <p style={{ textAlign: "center" }}>Please login to checkout</p>;
+        return <p style={{ textAlign: "center" }}>Моля, влезте в профила си, за да продължите</p>;
     }
 
     if (loading) {
-        return <p style={{ textAlign: "center" }}>Loading checkout...</p>;
+        return <p style={{ textAlign: "center" }}>Зареждане на плащане...</p>;
     }
 
     const subtotal = cartItems.reduce(
@@ -110,12 +110,8 @@ export default function Checkout() {
                     <div className="container">
                         <div className="banner_content d-md-flex justify-content-between align-items-center">
                             <div className="mb-3 mb-md-0">
-                                <h2>Product Checkout</h2>
-                                <p>Very us move be blessed multiply night</p>
-                            </div>
-                            <div className="page_link">
-                                <a href="/">Home</a>
-                                <a href="#">Product Checkout</a>
+                                <h2>Завършване на поръчка</h2>
+                                <p>Попълнете всички полета, за да завършите поръчката</p>
                             </div>
                         </div>
                     </div>
@@ -127,7 +123,7 @@ export default function Checkout() {
                     <div className="billing_details">
                         <div className="row">
                             <div className="col-lg-8">
-                                <h3>Billing Details</h3>
+                                <h3>Детайли за поръчка</h3>
 
                                 <form className="row contact_form">
                                     <div className="col-md-6 form-group">
@@ -135,7 +131,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="firstName"
-                                            placeholder="First name"
+                                            placeholder="Име"
                                             value={shippingData.firstName}
                                             onChange={onChangeHandler}
                                         />
@@ -146,7 +142,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="lastName"
-                                            placeholder="Last name"
+                                            placeholder="Фамилия"
                                             value={shippingData.lastName}
                                             onChange={onChangeHandler}
                                         />
@@ -157,7 +153,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="phone"
-                                            placeholder="Phone"
+                                            placeholder="Телефон"
                                             value={shippingData.phone}
                                             onChange={onChangeHandler}
                                         />
@@ -168,7 +164,7 @@ export default function Checkout() {
                                             type="email"
                                             className="form-control"
                                             name="email"
-                                            placeholder="Email"
+                                            placeholder="Имейл"
                                             value={shippingData.email}
                                             onChange={onChangeHandler}
                                         />
@@ -179,7 +175,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="address"
-                                            placeholder="Address"
+                                            placeholder="Адрес"
                                             value={shippingData.address}
                                             onChange={onChangeHandler}
                                         />
@@ -190,7 +186,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="city"
-                                            placeholder="City"
+                                            placeholder="Град/Село"
                                             value={shippingData.city}
                                             onChange={onChangeHandler}
                                         />
@@ -201,7 +197,7 @@ export default function Checkout() {
                                             type="text"
                                             className="form-control"
                                             name="zip"
-                                            placeholder="ZIP Code"
+                                            placeholder="Пощенски код"
                                             value={shippingData.zip}
                                             onChange={onChangeHandler}
                                         />
@@ -211,13 +207,13 @@ export default function Checkout() {
 
                             <div className="col-lg-4">
                                 <div className="order_box">
-                                    <h2>Your Order</h2>
+                                    <h2>Вашата поръчка</h2>
 
                                     <ul className="list">
                                         <li>
                                             <a href="#">
-                                                Product
-                                                <span>Total</span>
+                                                Продукт
+                                                <span>Общо</span>
                                             </a>
                                         </li>
 
@@ -236,13 +232,13 @@ export default function Checkout() {
 
                                     <ul className="list list_2">
                                         <li>
-                                            <a href="#">Subtotal <span>€ {subtotal}</span></a>
+                                            <a href="#">Цена за продуктите <span>€ {subtotal}</span></a>
                                         </li>
                                         <li>
-                                            <a href="#">Shipping <span>€ {shipping}</span></a>
+                                            <a href="#">Доставка <span>€ {shipping}</span></a>
                                         </li>
                                         <li>
-                                            <a href="#">Total <span>€ {total}</span></a>
+                                            <a href="#">Общо <span>€ {total}</span></a>
                                         </li>
                                     </ul>
 
@@ -255,7 +251,7 @@ export default function Checkout() {
                                             opacity: isSubmitting ? 0.6 : 1
                                         }}
                                     >
-                                        {isSubmitting ? "Processing..." : "Proceed to Paypal"}
+                                        {isSubmitting ? "Зареждане..." : "Завършване на поръчка"}
                                     </a>
                                 </div>
                             </div>

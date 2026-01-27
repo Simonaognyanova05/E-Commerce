@@ -27,12 +27,8 @@ export default function Cart() {
                     <div className="container">
                         <div className="banner_content d-md-flex justify-content-between align-items-center">
                             <div className="mb-3 mb-md-0">
-                                <h2>Cart</h2>
-                                <p>Very us move be blessed multiply night</p>
-                            </div>
-                            <div className="page_link">
-                                <a href="index.html">Home</a>
-                                <a href="cart.html">Cart</a>
+                                <h2>Количка</h2>
+                                <p>Тук са продуктите, които желаете да закупите</p>
                             </div>
                         </div>
                     </div>
@@ -45,10 +41,10 @@ export default function Cart() {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
+                                        <th scope="col">Продукт</th>
+                                        <th scope="col">Цена</th>
+                                        <th scope="col">Количество</th>
+                                        <th scope="col">Обща сума</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,7 +55,7 @@ export default function Cart() {
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <h5>Subtotal</h5>
+                                            <h5>Цена</h5>
                                         </td>
                                         <td>
                                             <h5>€ {Number(totalSum)}</h5>
@@ -71,8 +67,8 @@ export default function Cart() {
                                         <td></td>
                                         <td>
                                             <div className="checkout_btn_inner">
-                                                <Link className="gray_btn" to="/shop">Continue Shopping</Link>
-                                                <Link className="main_btn" to="/checkout">Proceed to checkout</Link>
+                                                <Link className="gray_btn" to="/shop">Продължете пазаруването</Link>
+                                                <Link className="main_btn" to="/checkout">Продължете към плащане</Link>
                                             </div>
                                         </td>
                                     </tr>
