@@ -10,7 +10,6 @@ export default function Shop() {
     const [sortType, setSortType] = useState("default");
     const [selectedCategory, setSelectedCategory] = useState("all");
 
-    // 📦 Load products
     useEffect(() => {
         getProducts()
             .then(res => {
@@ -27,18 +26,15 @@ export default function Shop() {
             });
     }, []);
 
-    // 🔄 Filter + Sort logic (COMBINED)
     useEffect(() => {
         let result = [...products];
 
-        // 🎯 Filter by category
         if (selectedCategory !== "all") {
             result = result.filter(
                 p => p.category === selectedCategory
             );
         }
 
-        // 🔃 Sorting
         if (sortType === "price-asc") {
             result.sort((a, b) => a.price - b.price);
         }
@@ -58,7 +54,6 @@ export default function Shop() {
 
     return (
         <>
-            {/* Banner */}
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">
@@ -70,12 +65,9 @@ export default function Shop() {
                 </div>
             </section>
 
-            {/* Shop */}
             <section className="cat_product_area section_gap">
                 <div className="container">
                     <div className="row flex-row-reverse">
-
-                        {/* Products */}
                         <div className="col-lg-9">
                             <div className="product_top_bar">
                                 <select
@@ -103,7 +95,6 @@ export default function Shop() {
                             </div>
                         </div>
 
-                        {/* Sidebar */}
                         <div className="col-lg-3">
                             <aside className="left_widgets p_filter_widgets">
                                 <div className="l_w_title">

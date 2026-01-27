@@ -68,7 +68,7 @@ export default function Header() {
                                         <li className="nav-item">
                                             <Link className="nav-link" to="/shop">Shop</Link>
                                         </li>
-                                        <li className="nav-item submenu dropdown">
+                                        {/* <li className="nav-item submenu dropdown">
                                             <Link to="/blog" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                                 aria-expanded="false">Blog</Link>
                                             <ul className="dropdown-menu">
@@ -79,19 +79,7 @@ export default function Header() {
                                                     <Link className="nav-link" to="/detailsBlog">Blog Details</Link>
                                                 </li>
                                             </ul>
-                                        </li>
-                                        <li className="nav-item submenu dropdown">
-                                            <Link to="#" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                aria-expanded="false">Pages</Link>
-                                            <ul className="dropdown-menu">
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/tracking">Tracking</Link>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/elements">Elements</Link>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        </li> */}
                                         <li className="nav-item">
                                             <Link className="nav-link" to="/contact">Contact</Link>
                                         </li>
