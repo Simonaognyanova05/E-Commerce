@@ -3,156 +3,146 @@ import { getProducts } from "../../services/getProducts";
 import ShopItem from "./ShopItem";
 
 export default function Shop() {
-    let [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
+    const [sortType, setSortType] = useState("default");
+    const [selectedCategory, setSelectedCategory] = useState("all");
+
+    // 📦 Load products
     useEffect(() => {
         getProducts()
-        .then(res => {
-            setProducts(res);
-        })
-        .catch(() => {
-            alert("Възникна грешка при зареждане на продуктите!");
-        })
-    }, [products]);
+            .then(res => {
+                setProducts(res);
+                setFilteredProducts(res);
+
+                const uniqueCategories = [
+                    ...new Set(res.map(p => p.category).filter(Boolean))
+                ];
+                setCategories(uniqueCategories);
+            })
+            .catch(() => {
+                alert("Възникна грешка при зареждане на продуктите!");
+            });
+    }, []);
+
+    // 🔄 Filter + Sort logic (COMBINED)
+    useEffect(() => {
+        let result = [...products];
+
+        // 🎯 Filter by category
+        if (selectedCategory !== "all") {
+            result = result.filter(
+                p => p.category === selectedCategory
+            );
+        }
+
+        // 🔃 Sorting
+        if (sortType === "price-asc") {
+            result.sort((a, b) => a.price - b.price);
+        }
+
+        if (sortType === "price-desc") {
+            result.sort((a, b) => b.price - a.price);
+        }
+
+        if (sortType === "name") {
+            result.sort((a, b) =>
+                (a.name || "").localeCompare(b.name || "")
+            );
+        }
+
+        setFilteredProducts(result);
+    }, [products, sortType, selectedCategory]);
+
     return (
         <>
+            {/* Banner */}
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">
-                        <div className="banner_content d-md-flex justify-content-between align-items-center">
-                            <div className="mb-3 mb-md-0">
-                                <h2>Shop Category</h2>
-                                <p>Very us move be blessed multiply night</p>
-                            </div>
-                            <div className="page_link">
-                                <a href="index.html">Home</a>
-                                <a href="category.html">Shop</a>
-                                <a href="category.html">Women Fashion</a>
-                            </div>
+                        <div className="banner_content">
+                            <h2>Нашите продукти</h2>
+                            <p>Тук ще намерите всички продукти, предложени от нас.</p>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {/* Shop */}
             <section className="cat_product_area section_gap">
                 <div className="container">
                     <div className="row flex-row-reverse">
+
+                        {/* Products */}
                         <div className="col-lg-9">
                             <div className="product_top_bar">
-                                <div className="left_dorp">
-                                    <select className="sorting">
-                                        <option value="1">Default sorting</option>
-                                        <option value="2">Default sorting 01</option>
-                                        <option value="4">Default sorting 02</option>
-                                    </select>
-                                </div>
+                                <select
+                                    className="sorting"
+                                    value={sortType}
+                                    onChange={(e) => setSortType(e.target.value)}
+                                >
+                                    <option value="default">Default sorting</option>
+                                    <option value="price-asc">Цена ↑</option>
+                                    <option value="price-desc">Цена ↓</option>
+                                    <option value="name">Име (A–Z)</option>
+                                </select>
                             </div>
 
                             <div className="latest_product_inner">
                                 <div className="row">
-                                    {products.map(x => <ShopItem key={x.id} product={x}/>)}
+                                    {filteredProducts.length > 0 ? (
+                                        filteredProducts.map(p => (
+                                            <ShopItem key={p.id} product={p} />
+                                        ))
+                                    ) : (
+                                        <p>Няма продукти в тази категория.</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
 
+                        {/* Sidebar */}
                         <div className="col-lg-3">
-                            <div className="left_sidebar_area">
-                                <aside className="left_widgets p_filter_widgets">
-                                    <div className="l_w_title">
-                                        <h3>Browse Categories</h3>
-                                    </div>
-                                    <div className="widgets_inner">
-                                        <ul className="list">
-                                            <li>
-                                                <a href="#">Frozen Fish</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Dried Fish</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Fresh Fish</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Meat Alternatives</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Fresh Fish</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Meat Alternatives</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Meat</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </aside>
+                            <aside className="left_widgets p_filter_widgets">
+                                <div className="l_w_title">
+                                    <h3>Категории</h3>
+                                </div>
+                                <div className="widgets_inner">
+                                    <ul className="list">
+                                        <li>
+                                            <label className="radio-item">
+                                                <input
+                                                    type="radio"
+                                                    name="category"
+                                                    value="all"
+                                                    checked={selectedCategory === "all"}
+                                                    onChange={() => setSelectedCategory("all")}
+                                                />
+                                                <span>Всички</span>
+                                            </label>
+                                        </li>
 
-                                <aside className="left_widgets p_filter_widgets">
-                                    <div className="l_w_title">
-                                        <h3>Product Brand</h3>
-                                    </div>
-                                    <div className="widgets_inner">
-                                        <ul className="list">
-                                            <li>
-                                                <a href="#">Apple</a>
+                                        {categories.map(cat => (
+                                            <li key={cat}>
+                                                <label className="radio-item">
+                                                    <input
+                                                        type="radio"
+                                                        name="category"
+                                                        value={cat}
+                                                        checked={selectedCategory === cat}
+                                                        onChange={() => setSelectedCategory(cat)}
+                                                    />
+                                                    <span>{cat}</span>
+                                                </label>
                                             </li>
-                                            <li>
-                                                <a href="#">Asus</a>
-                                            </li>
-                                            <li className="active">
-                                                <a href="#">Gionee</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Micromax</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Samsung</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </aside>
-
-                                <aside className="left_widgets p_filter_widgets">
-                                    <div className="l_w_title">
-                                        <h3>Color Filter</h3>
-                                    </div>
-                                    <div className="widgets_inner">
-                                        <ul className="list">
-                                            <li>
-                                                <a href="#">Black</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Black Leather</a>
-                                            </li>
-                                            <li className="active">
-                                                <a href="#">Black with red</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Gold</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Spacegrey</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </aside>
-
-                                <aside className="left_widgets p_filter_widgets">
-                                    <div className="l_w_title">
-                                        <h3>Price Filter</h3>
-                                    </div>
-                                    <div className="widgets_inner">
-                                        <div className="range_item">
-                                            <div id="slider-range"></div>
-                                            <div className="">
-                                                <label for="amount">Price : </label>
-                                                <input type="text" id="amount" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </aside>
-                            </div>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </aside>
                         </div>
+
                     </div>
                 </div>
             </section>
