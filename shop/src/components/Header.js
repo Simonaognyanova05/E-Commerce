@@ -14,6 +14,9 @@ export default function Header() {
             <li className="nav-item">
                 <Link className="nav-link" to="/orders">Orders</Link>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/adminMessages">Messages</Link>
+            </li>
         </>
     );
     const logged = (
