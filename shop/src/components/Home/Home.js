@@ -94,13 +94,13 @@ export default function Home() {
             </section>
 
 
-            <section className="blog-area section-gap">
+            {/* <section className="blog-area section-gap">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-12">
                             <div className="main_title">
-                                <h2><span>latest blog</span></h2>
-                                <p>Bring called seed first of third give itself now ment</p>
+                                <h2><span>последни новини</span></h2>
+                                <p>Най-новите новини за нашия сайт</p>
                             </div>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }
