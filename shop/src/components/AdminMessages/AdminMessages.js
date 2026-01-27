@@ -33,7 +33,7 @@ export default function AdminMessages() {
     };
 
     if (loading) {
-        return <p style={{ textAlign: "center" }}>Loading messages...</p>;
+        return <p style={{ textAlign: "center" }}>Зареждане на съобщения...</p>;
     }
 
     return (
@@ -43,8 +43,8 @@ export default function AdminMessages() {
                     <div className="container">
                         <div className="banner_content d-md-flex justify-content-between align-items-center">
                             <div>
-                                <h2>Admin Messages</h2>
-                                <p>All contact & user messages</p>
+                                <h2>Съобщения от потребители</h2>
+                                <p>Всички съобщения от потребители</p>
                             </div>
                         </div>
                     </div>
@@ -56,10 +56,10 @@ export default function AdminMessages() {
                     <div className="row">
                         <div className="col-12">
                             <div className="order_box">
-                                <h3>Messages</h3>
+                                <h3>Съобщения</h3>
 
                                 {messages.length === 0 && (
-                                    <p>No messages yet.</p>
+                                    <p>Нямате нови съобщения.</p>
                                 )}
 
                                 {messages.length > 0 && (
@@ -68,11 +68,11 @@ export default function AdminMessages() {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Email</th>
-                                                    <th>Message</th>
-                                                    <th>Date</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>Имейл</th>
+                                                    <th>Съобщения</th>
+                                                    <th>Дата на изпращане</th>
+                                                    <th>Статус</th>
+                                                    <th>Действие</th>
                                                 </tr>
                                             </thead>
 
@@ -92,11 +92,11 @@ export default function AdminMessages() {
                                                         <td>
                                                             {msg.isRead ? (
                                                                 <span className="badge badge-success">
-                                                                    Read
+                                                                    Прочетено
                                                                 </span>
                                                             ) : (
                                                                 <span className="badge badge-warning">
-                                                                    Unread
+                                                                    Непрочетено
                                                                 </span>
                                                             )}
                                                         </td>

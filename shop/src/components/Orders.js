@@ -39,7 +39,7 @@ export default function Orders() {
     };
 
     if (loading) {
-        return <p style={{ textAlign: "center" }}>Loading orders...</p>;
+        return <p style={{ textAlign: "center" }}>Зареждане на поръчки...</p>;
     }
 
     return (
@@ -49,12 +49,8 @@ export default function Orders() {
                     <div className="container">
                         <div className="banner_content d-md-flex justify-content-between align-items-center">
                             <div className="mb-3 mb-md-0">
-                                <h2>Admin Orders</h2>
-                                <p>Manage all customer orders</p>
-                            </div>
-                            <div className="page_link">
-                                <a href="/">Home</a>
-                                <a href="#">Admin Orders</a>
+                                <h2>Поръчки</h2>
+                                <p>Тук са всички направени поръчки</p>
                             </div>
                         </div>
                     </div>
@@ -66,22 +62,22 @@ export default function Orders() {
                     <div className="row">
                         <div className="col-12">
                             <div className="order_box">
-                                <h3>Orders List</h3>
+                                <h3>Списък с поръчки</h3>
 
                                 {orders.length === 0 && (
-                                    <p>No orders yet.</p>
+                                    <p>Все още няма направени поръчки.</p>
                                 )}
 
                                 <div className="table-responsive">
                                     <table className="table">
                                         <thead>
                                             <tr>
-                                                <th>Order ID</th>
-                                                <th>User Email</th>
-                                                <th>Date</th>
-                                                <th>Total</th>
-                                                <th>Status</th>
-                                                <th>Delivery / Actions</th>
+                                                <th>Номер на поръчка</th>
+                                                <th>Имейл на потребител</th>
+                                                <th>Дата на създаване</th>
+                                                <th>Общо</th>
+                                                <th>Статус на поръчка</th>
+                                                <th>Доставка / Действие</th>
                                             </tr>
                                         </thead>
 
@@ -95,33 +91,33 @@ export default function Orders() {
                                                     <td>
                                                         {order.status === "pending" && (
                                                             <span className="badge badge-warning">
-                                                                Pending
+                                                                Изчакване
                                                             </span>
                                                         )}
                                                         {order.status === "completed" && (
                                                             <span className="badge badge-success">
-                                                                Completed
+                                                                Завършена
                                                             </span>
                                                         )}
                                                         {order.status === "cancelled" && (
                                                             <span className="badge badge-danger">
-                                                                Cancelled
+                                                                Отказана
                                                             </span>
                                                         )}
                                                     </td>
 
                                                     <td>
                                                         <div style={{ fontSize: "14px", lineHeight: "1.4" }}>
-                                                            <strong>Delivery Info</strong>
+                                                            <strong>Инфо за доставка</strong>
                                                             <br />
 
                                                             {order.shippingData ? (
                                                                 <>
                                                                     {order.shippingData.firstName} {order.shippingData.lastName}
                                                                     <br />
-                                                                    📞 {order.shippingData.phone}
+                                                                    {order.shippingData.phone}
                                                                     <br />
-                                                                    📍 {order.shippingData.address}
+                                                                    {order.shippingData.address}
                                                                     <br />
                                                                     {order.shippingData.city}, {order.shippingData.zip}
                                                                 </>

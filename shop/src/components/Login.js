@@ -24,7 +24,7 @@ export default function Login() {
                 <div className="row justify-content-center">
                     <div className="col-lg-5 col-md-7 col-sm-10">
                         <div className="login_form_inner p-4 shadow-sm bg-white rounded">
-                            <h3 className="text-center mb-4">Login to your account</h3>
+                            <h3 className="text-center mb-4">Влизане</h3>
 
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group mb-3">
@@ -32,7 +32,7 @@ export default function Login() {
                                         type="email"
                                         name="email"
                                         className="form-control"
-                                        placeholder="Email address"
+                                        placeholder="Имейл"
                                         required
                                     />
                                 </div>
@@ -42,7 +42,7 @@ export default function Login() {
                                         type="password"
                                         name="password"
                                         className="form-control"
-                                        placeholder="Password"
+                                        placeholder="Парола"
                                         required
                                     />
                                 </div>
@@ -52,13 +52,13 @@ export default function Login() {
                                         type="submit"
                                         className="main_btn w-100"
                                     >
-                                        Login
+                                        Влизане
                                     </button>
                                 </div>
 
                                 <div className="text-center mt-3">
                                     <a href="#" className="small">
-                                        Forgot password?
+                                       Забравена парола?
                                     </a>
                                 </div>
                             </form>

@@ -35,7 +35,7 @@ export default function DetailsProduct() {
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm(
-            "Are you sure you want to delete this product?"
+            "Сигурни ли сте, че искате да изтриете този продукт?"
         );
 
         if (!confirmDelete) return;
@@ -45,34 +45,34 @@ export default function DetailsProduct() {
             navigate("/shop");
         } catch (error) {
             console.error("Delete error:", error);
-            alert("An error occurred while deleting the product!");
+            alert("Възникна грешка!");
         }
     };
 
     const handleAddToCart = async () => {
         if (!user) {
-            alert("You must be logged in to add products to cart");
+            alert("Трябва да влезете в профила си, за да добавите в количка!");
             return;
         }
 
         try {
             await addToCart(user.uid, details, quantity);
-            alert("Product added to cart 🛒");
+            alert("Продуктът е добавен в количката.");
         } catch (error) {
             console.error(error);
-            alert("Error adding to cart");
+            alert("Възникна грешка.");
         }
     };
 
 
     const loggedUser = (
-        <button onClick={handleAddToCart} className="main_btn">Add to Cart</button>
+        <button onClick={handleAddToCart} className="main_btn">Добави в количка</button>
     );
 
     const loggedAdmin = (
         <>
-            <Link to={`/editProduct/${details.id}`} className="main_btn">Edit</Link>
-            <button onClick={() => handleDelete(details.id)} className="main_btn">Delete</button>
+            <Link to={`/editProduct/${details.id}`} className="main_btn">Редактирай</Link>
+            <button onClick={() => handleDelete(details.id)} className="main_btn">Изтрий</button>
         </>
     );
 
@@ -84,12 +84,8 @@ export default function DetailsProduct() {
                     <div className="container">
                         <div className="banner_content d-md-flex justify-content-between align-items-center">
                             <div>
-                                <h2>Product Details</h2>
-                                <p>Very us move be blessed multiply night</p>
-                            </div>
-                            <div className="page_link">
-                                <a href="/">Home</a>
-                                <a href="#">Product Details</a>
+                                <h2>Детайли за продукт</h2>
+                                <p>Това са всички подробности за продукта</p>
                             </div>
                         </div>
                     </div>
@@ -117,7 +113,7 @@ export default function DetailsProduct() {
 
                                 <ul className="list">
                                     <li>
-                                        <span>Category</span> : Household
+                                        <span>Категория</span> : {details.category}
                                     </li>
                                 </ul>
 
@@ -125,7 +121,7 @@ export default function DetailsProduct() {
 
                                 {/* ===== Quantity ===== */}
                                 <div className="product_count">
-                                    <label htmlFor="qty">Quantity:</label>
+                                    <label htmlFor="qty">Количество:</label>
                                     <input
                                         type="text"
                                         id="qty"
