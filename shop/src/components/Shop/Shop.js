@@ -1,3 +1,4 @@
+import './Shop.css';
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/getProducts";
 import ShopItem from "./ShopItem";
@@ -10,6 +11,11 @@ export default function Shop() {
     const [sortType, setSortType] = useState("default");
     const [selectedCategory, setSelectedCategory] = useState("all");
 
+    // PAGINATION
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 6;
+
+    // LOAD PRODUCTS
     useEffect(() => {
         getProducts()
             .then(res => {
@@ -26,13 +32,12 @@ export default function Shop() {
             });
     }, []);
 
+    // FILTER + SORT
     useEffect(() => {
         let result = [...products];
 
         if (selectedCategory !== "all") {
-            result = result.filter(
-                p => p.category === selectedCategory
-            );
+            result = result.filter(p => p.category === selectedCategory);
         }
 
         if (sortType === "price-asc") {
@@ -50,7 +55,18 @@ export default function Shop() {
         }
 
         setFilteredProducts(result);
+        setCurrentPage(1); // reset pagination
     }, [products, sortType, selectedCategory]);
+
+    // PAGINATION LOGIC
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
     return (
         <>
@@ -68,6 +84,8 @@ export default function Shop() {
             <section className="cat_product_area section_gap">
                 <div className="container">
                     <div className="row flex-row-reverse">
+
+                        {/* PRODUCTS */}
                         <div className="col-lg-9">
                             <div className="product_top_bar">
                                 <select
@@ -84,17 +102,53 @@ export default function Shop() {
 
                             <div className="latest_product_inner">
                                 <div className="row">
-                                    {filteredProducts.length > 0 ? (
-                                        filteredProducts.map(p => (
+                                    {currentProducts.length > 0 ? (
+                                        currentProducts.map(p => (
                                             <ShopItem key={p.id} product={p} />
                                         ))
                                     ) : (
                                         <p>Няма продукти в тази категория.</p>
                                     )}
                                 </div>
+
+                                {/* PAGINATION */}
+                                {totalPages > 1 && (
+                                    <div className="pagination-wrapper">
+                                        <button
+                                            disabled={currentPage === 1}
+                                            onClick={() =>
+                                                setCurrentPage(prev => prev - 1)
+                                            }
+                                        >
+                                            ← Предишна
+                                        </button>
+
+                                        {[...Array(totalPages)].map((_, i) => (
+                                            <button
+                                                key={i}
+                                                className={
+                                                    currentPage === i + 1 ? "active" : ""
+                                                }
+                                                onClick={() => setCurrentPage(i + 1)}
+                                            >
+                                                {i + 1}
+                                            </button>
+                                        ))}
+
+                                        <button
+                                            disabled={currentPage === totalPages}
+                                            onClick={() =>
+                                                setCurrentPage(prev => prev + 1)
+                                            }
+                                        >
+                                            Следваща →
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
+                        {/* SIDEBAR */}
                         <div className="col-lg-3">
                             <aside className="left_widgets p_filter_widgets">
                                 <div className="l_w_title">
@@ -109,7 +163,9 @@ export default function Shop() {
                                                     name="category"
                                                     value="all"
                                                     checked={selectedCategory === "all"}
-                                                    onChange={() => setSelectedCategory("all")}
+                                                    onChange={() =>
+                                                        setSelectedCategory("all")
+                                                    }
                                                 />
                                                 <span>Всички</span>
                                             </label>
@@ -122,8 +178,12 @@ export default function Shop() {
                                                         type="radio"
                                                         name="category"
                                                         value={cat}
-                                                        checked={selectedCategory === cat}
-                                                        onChange={() => setSelectedCategory(cat)}
+                                                        checked={
+                                                            selectedCategory === cat
+                                                        }
+                                                        onChange={() =>
+                                                            setSelectedCategory(cat)
+                                                        }
                                                     />
                                                     <span>{cat}</span>
                                                 </label>
