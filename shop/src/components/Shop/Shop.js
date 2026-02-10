@@ -1,4 +1,4 @@
-import './Shop.css';
+import "./Shop.css";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/getProducts";
 import ShopItem from "./ShopItem";
@@ -40,33 +40,33 @@ export default function Shop() {
             result = result.filter(p => p.category === selectedCategory);
         }
 
-        if (sortType === "price-asc") {
-            result.sort((a, b) => a.price - b.price);
-        }
-
-        if (sortType === "price-desc") {
-            result.sort((a, b) => b.price - a.price);
-        }
-
-        if (sortType === "name") {
-            result.sort((a, b) =>
-                (a.name || "").localeCompare(b.name || "")
-            );
+        switch (sortType) {
+            case "price-asc":
+                result.sort((a, b) => a.price - b.price);
+                break;
+            case "price-desc":
+                result.sort((a, b) => b.price - a.price);
+                break;
+            case "name":
+                result.sort((a, b) =>
+                    (a.productName || "").localeCompare(b.productName || "")
+                );
+                break;
+            default:
+                break;
         }
 
         setFilteredProducts(result);
-        setCurrentPage(1); // reset pagination
+        setCurrentPage(1);
     }, [products, sortType, selectedCategory]);
 
-    // PAGINATION LOGIC
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = filteredProducts.slice(
-        indexOfFirstProduct,
-        indexOfLastProduct
-    );
-
+    // PAGINATION
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const currentProducts = filteredProducts.slice(
+        startIndex,
+        startIndex + productsPerPage
+    );
 
     return (
         <>
@@ -91,7 +91,7 @@ export default function Shop() {
                                 <select
                                     className="sorting"
                                     value={sortType}
-                                    onChange={(e) => setSortType(e.target.value)}
+                                    onChange={e => setSortType(e.target.value)}
                                 >
                                     <option value="default">Default sorting</option>
                                     <option value="price-asc">Цена ↑</option>
@@ -116,32 +116,32 @@ export default function Shop() {
                                     <div className="pagination-wrapper">
                                         <button
                                             disabled={currentPage === 1}
-                                            onClick={() =>
-                                                setCurrentPage(prev => prev - 1)
-                                            }
+                                            onClick={() => setCurrentPage(p => p - 1)}
                                         >
-                                            ← Предишна
+                                            ←
                                         </button>
 
-                                        {[...Array(totalPages)].map((_, i) => (
-                                            <button
-                                                key={i}
-                                                className={
-                                                    currentPage === i + 1 ? "active" : ""
-                                                }
-                                                onClick={() => setCurrentPage(i + 1)}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        ))}
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                            .filter(page =>
+                                                page === 1 ||
+                                                page === totalPages ||
+                                                Math.abs(page - currentPage) <= 1
+                                            )
+                                            .map(page => (
+                                                <button
+                                                    key={page}
+                                                    className={currentPage === page ? "active" : ""}
+                                                    onClick={() => setCurrentPage(page)}
+                                                >
+                                                    {page}
+                                                </button>
+                                            ))}
 
                                         <button
                                             disabled={currentPage === totalPages}
-                                            onClick={() =>
-                                                setCurrentPage(prev => prev + 1)
-                                            }
+                                            onClick={() => setCurrentPage(p => p + 1)}
                                         >
-                                            Следваща →
+                                            →
                                         </button>
                                     </div>
                                 )}
@@ -161,11 +161,8 @@ export default function Shop() {
                                                 <input
                                                     type="radio"
                                                     name="category"
-                                                    value="all"
                                                     checked={selectedCategory === "all"}
-                                                    onChange={() =>
-                                                        setSelectedCategory("all")
-                                                    }
+                                                    onChange={() => setSelectedCategory("all")}
                                                 />
                                                 <span>Всички</span>
                                             </label>
@@ -177,13 +174,8 @@ export default function Shop() {
                                                     <input
                                                         type="radio"
                                                         name="category"
-                                                        value={cat}
-                                                        checked={
-                                                            selectedCategory === cat
-                                                        }
-                                                        onChange={() =>
-                                                            setSelectedCategory(cat)
-                                                        }
+                                                        checked={selectedCategory === cat}
+                                                        onChange={() => setSelectedCategory(cat)}
                                                     />
                                                     <span>{cat}</span>
                                                 </label>

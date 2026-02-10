@@ -1,17 +1,33 @@
+/* =========================
+   PAGINATION
+========================= */
 .pagination-wrapper {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 30px;
+    align-items: center;
+    gap: 6px;
+    margin: 40px auto 20px;
+    width: 100%;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 }
 
 .pagination-wrapper button {
-    padding: 6px 12px;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 6px;
     border: 1px solid #ddd;
     background: #fff;
+    font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    position: relative;
+    z-index: 11;
+    touch-action: manipulation;
+}
+
+.pagination-wrapper button:hover:not(:disabled) {
+    background: #f1f1f1;
 }
 
 .pagination-wrapper button.active {
@@ -25,13 +41,31 @@
     cursor: not-allowed;
 }
 
-/* GRID FIX */
-.latest_product_inner .row {
-    display: flex;
-    flex-wrap: wrap;
+/* MOBILE */
+@media (max-width: 576px) {
+    .pagination-wrapper {
+        margin-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .pagination-wrapper button {
+        min-width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
 }
 
-/* CARD */
+/* =========================
+   PRODUCT GRID
+========================= */
+/* ❌ НЕ ПИПАМЕ .row – Bootstrap си го управлява */
+.latest_product_inner {
+    position: relative;
+}
+
+/* =========================
+   CARD
+========================= */
 .single-product {
     display: flex;
     flex-direction: column;
@@ -41,24 +75,22 @@
     padding: 15px;
 }
 
-/* IMAGE WRAPPER */
+/* =========================
+   IMAGE
+========================= */
 .product-img {
     position: relative;
     width: 100%;
     height: 230px;
-    /* 👈 фиксирана височина */
-    overflow: hidden;
 }
 
-/* IMAGE */
 .product-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* 👈 без разтягане */
 }
 
-/* ICONS OVER IMAGE */
+/* ICONS */
 .p_icon {
     position: absolute;
     bottom: 15px;
@@ -67,7 +99,9 @@
     gap: 10px;
 }
 
-/* BOTTOM CONTENT */
+/* =========================
+   BOTTOM
+========================= */
 .product-btm {
     display: flex;
     flex-direction: column;
@@ -75,19 +109,14 @@
     padding-top: 15px;
 }
 
-/* PRODUCT TITLE */
 .product-btm h4 {
     font-size: 16px;
     min-height: 48px;
-    /* 👈 еднакви заглавия */
     line-height: 1.4;
     margin-bottom: 10px;
-    overflow: hidden;
 }
 
-/* PRICE */
 .product-btm .mt-3 {
     margin-top: auto;
-    /* 👈 винаги долу */
     font-weight: 600;
 }
