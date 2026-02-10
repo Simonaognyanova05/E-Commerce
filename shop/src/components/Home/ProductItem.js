@@ -10,9 +10,6 @@ export default function ProductItem({ item }) {
                         <Link to={`/product/${item.id}`}>
                             <i className="ti-eye"></i>
                         </Link>
-                        <a href="#">
-                            <i className="ti-shopping-cart"></i>
-                        </a>
                     </div>
                 </div>
                 <div className="product-btm">
