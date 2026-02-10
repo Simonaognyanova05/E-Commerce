@@ -2,7 +2,7 @@ export default function ProductItem({ item }) {
     return (<div className="col-lg-4 col-md-6">
         <div className="single-product">
             <div className="product-img">
-                <img className="img-fluid w-100" src={item.img} alt="" />
+                <img className="img-fluid w-100" src={item.img1} alt="" />
                 <div className="p_icon">
                     <a href="#">
                         <i className="ti-eye"></i>
