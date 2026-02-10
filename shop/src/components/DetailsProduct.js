@@ -60,7 +60,7 @@ export default function DetailsProduct() {
             alert("Продуктът е добавен в количката.");
         } catch (error) {
             console.error(error);
-            alert("Възникна грешка.");
+            alert("Трябва да влезете в профила си, за да добавите продукт в количката!");
         }
     };
 
@@ -146,7 +146,7 @@ export default function DetailsProduct() {
                                 </div>
 
                                 <div className="card_area">
-                                    {Boolean(user.email) ? loggedUser : ""}
+                                    {loggedUser}
                                     {isAdmin ? loggedAdmin : ""}
                                 </div>
                             </div>
