@@ -24,3 +24,70 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/* GRID FIX */
+.latest_product_inner .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* CARD */
+.single-product {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px;
+}
+
+/* IMAGE WRAPPER */
+.product-img {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    /* 👈 фиксирана височина */
+    overflow: hidden;
+}
+
+/* IMAGE */
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 👈 без разтягане */
+}
+
+/* ICONS OVER IMAGE */
+.p_icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* BOTTOM CONTENT */
+.product-btm {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-top: 15px;
+}
+
+/* PRODUCT TITLE */
+.product-btm h4 {
+    font-size: 16px;
+    min-height: 48px;
+    /* 👈 еднакви заглавия */
+    line-height: 1.4;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* PRICE */
+.product-btm .mt-3 {
+    margin-top: auto;
+    /* 👈 винаги долу */
+    font-weight: 600;
+}
