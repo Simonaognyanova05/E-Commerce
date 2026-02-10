@@ -1,13 +1,13 @@
 import CartItem from "./CartItem";
-import {Link} from "react-router-dom";
-import { useAuth } from '../../contexts/AuthContext';
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { getUserCart } from "../../services/getUserCart";
+import { deleteCartItem } from "../../services/deleteCartItem";
 
 export default function Cart() {
     const { user } = useAuth();
     const [cart, setCart] = useState([]);
-    let totalSum = 0;
 
     useEffect(() => {
         if (!user) return;
@@ -17,11 +17,29 @@ export default function Cart() {
             .catch(console.error);
     }, [user]);
 
-    cart.forEach(x => totalSum += x.quantity * x.price)
+    const removeFromCart = async (productId) => {
+        if (!user) return;
+
+        try {
+            // 1. Backend / Firestore
+            await deleteCartItem(user.uid, productId);
+
+            // 2. Local state
+            setCart(prev =>
+                prev.filter(item => item.id !== productId)
+            );
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const totalSum = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
 
     return (
         <>
-
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">
@@ -34,6 +52,7 @@ export default function Cart() {
                     </div>
                 </div>
             </section>
+
             <section className="cart_area">
                 <div className="container">
                     <div className="cart_inner">
@@ -41,34 +60,37 @@ export default function Cart() {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Продукт</th>
-                                        <th scope="col">Цена</th>
-                                        <th scope="col">Количество</th>
-                                        <th scope="col">Обща сума</th>
+                                        <th>Продукт</th>
+                                        <th>Цена</th>
+                                        <th>Количество</th>
+                                        <th>Обща сума</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    {cart.map(x => <CartItem key={x.id} product={x} />)}
+                                    {cart.map(item => (
+                                        <CartItem
+                                            key={item.id}
+                                            product={item}
+                                            onRemove={removeFromCart}
+                                        />
+                                    ))}
 
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <h5>Цена</h5>
-                                        </td>
-                                        <td>
-                                            <h5>€ {Number(totalSum)}</h5>
-                                        </td>
+                                        <td colSpan="2"></td>
+                                        <td><h5>Общо</h5></td>
+                                        <td><h5>€ {totalSum.toFixed(2)}</h5></td>
                                     </tr>
+
                                     <tr className="out_button_area">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colSpan="3"></td>
                                         <td>
                                             <div className="checkout_btn_inner">
-                                                <Link className="gray_btn" to="/shop">Продължете пазаруването</Link>
-                                                <Link className="main_btn" to="/checkout">Продължете към плащане</Link>
+                                                <Link className="gray_btn" to="/shop">
+                                                    Продължете пазаруването
+                                                </Link>
+                                                <Link className="main_btn" to="/checkout">
+                                                    Плащане
+                                                </Link>
                                             </div>
                                         </td>
                                     </tr>
@@ -79,5 +101,5 @@ export default function Cart() {
                 </div>
             </section>
         </>
-    )
+    );
 }
