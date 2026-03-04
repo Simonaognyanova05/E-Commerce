@@ -2,13 +2,12 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const createOrder = async ({
+    orderNumber,
     userId,
     email,
     items,
-    shippingData,
     subtotal,
-    shipping,
-    total,
+    status = "pending",
 }) => {
     if (!userId) {
         throw new Error("User is not authenticated");
@@ -18,9 +17,15 @@ export const createOrder = async ({
         throw new Error("Cart is empty");
     }
 
+    const parsedSubtotal = Number(subtotal) || 0;
+    const shipping = parsedSubtotal > 0 ? 4 : 0;
+    const total = parsedSubtotal + shipping;
+
     const order = {
+        orderNumber,
         userId,
         email,
+
         items: items.map(item => ({
             productId: item.productId || item.id,
             productName: item.productName,
@@ -28,19 +33,14 @@ export const createOrder = async ({
             quantity: Number(item.quantity),
             img: item.img || "",
         })),
-        shippingData: {
-            firstName: shippingData.firstName,
-            lastName: shippingData.lastName,
-            phone: shippingData.phone,
-            email: shippingData.email,
-            address: shippingData.address,
-            city: shippingData.city,
-            zip: shippingData.zip,
-        },
-        subtotal: Number(subtotal),
-        shipping: Number(shipping),
-        total: Number(total),
-        status: "pending",
+
+        subtotal: parsedSubtotal,
+        shipping,
+        total,
+
+        status, // вече идва отвън (waiting_for_payment или pending)
+
+        paymentMethod: "bank", // при теб в момента е фиксирано
         createdAt: serverTimestamp(),
     };
 

@@ -20,9 +20,14 @@ export default function Header() {
         </>
     );
     const logged = (
-        <li className="nav-item">
-            <Link className="nav-link" to="/logout">Изход</Link>
-        </li>
+        <>
+            <li className="nav-item">
+                <Link className="nav-link" to="/userProfile">Моят профил</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/logout">Изход</Link>
+            </li>
+        </>
     );
 
     const unlogged = (

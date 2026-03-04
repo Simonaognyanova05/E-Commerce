@@ -19,6 +19,7 @@ import Register from "./components/Register";
 import OrderSuccess from "./components/OrderSuccess";
 import Orders from "./components/Orders";
 import AdminMessages from "./components/AdminMessages/AdminMessages";
+import UserProfile from "./components/UserProfile";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/createProduct" element={<Create />} />
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/adminMessages" element={<AdminMessages />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

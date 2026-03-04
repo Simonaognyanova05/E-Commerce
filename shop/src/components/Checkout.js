@@ -13,16 +13,16 @@ export default function Checkout() {
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // 📦 Данни за доставка
     const [shippingData, setShippingData] = useState({
         firstName: "",
         lastName: "",
-        phone: "",
         email: "",
-        address: "",
-        city: "",
-        zip: "",
     });
+
+    const [paymentMethod, setPaymentMethod] = useState("card");
+
+    // Генерираме номер на поръчка (за основание)
+    const orderNumber = `ORD-${Date.now()}`;
 
     useEffect(() => {
         if (!user) return;
@@ -39,11 +39,11 @@ export default function Checkout() {
     }, [user]);
 
     if (!user) {
-        return <p style={{ textAlign: "center" }}>Моля, влезте в профила си, за да продължите</p>;
+        return <p style={{ textAlign: "center" }}>Моля, влезте в профила си</p>;
     }
 
     if (loading) {
-        return <p style={{ textAlign: "center" }}>Зареждане на плащане...</p>;
+        return <p style={{ textAlign: "center" }}>Зареждане...</p>;
     }
 
     const subtotal = cartItems.reduce(
@@ -63,7 +63,6 @@ export default function Checkout() {
 
     const handleCheckout = async (e) => {
         e.preventDefault();
-
         if (isSubmitting) return;
 
         if (!cartItems.length) {
@@ -71,10 +70,9 @@ export default function Checkout() {
             return;
         }
 
-        // 🛑 basic validation
         for (let key in shippingData) {
             if (!shippingData[key]) {
-                alert("Моля, попълнете всички данни за доставка");
+                alert("Моля, попълнете всички полета");
                 return;
             }
         }
@@ -83,182 +81,100 @@ export default function Checkout() {
             setIsSubmitting(true);
 
             await createOrder({
+                orderNumber,
                 userId: user.uid,
                 email: user.email,
                 items: cartItems,
-                shippingData,
                 subtotal,
-                shipping,
-                total,
+                status: paymentMethod === "bank" ? "waiting_for_payment" : "pending",
+                createdAt: new Date()
             });
 
             await clearUserCart(user.uid);
 
             navigate("/order-success");
+
         } catch (err) {
-            console.error("Checkout error:", err);
-            alert(err.message || "Грешка при завършване на поръчката");
+            console.error(err);
+            alert("Грешка при завършване на поръчката");
         } finally {
             setIsSubmitting(false);
         }
     };
 
     return (
-        <>
-            <section className="banner_area">
-                <div className="banner_inner d-flex align-items-center">
-                    <div className="container">
-                        <div className="banner_content d-md-flex justify-content-between align-items-center">
-                            <div className="mb-3 mb-md-0">
-                                <h2>Завършване на поръчка</h2>
-                                <p>Попълнете всички полета, за да завършите поръчката</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <section className="checkout_area section_gap">
+            <div className="container">
+                <div className="row">
 
-            <section className="checkout_area section_gap">
-                <div className="container">
-                    <div className="billing_details">
-                        <div className="row">
-                            <div className="col-lg-8">
-                                <h3>Детайли за поръчка</h3>
+                    <div className="col-lg-8">
+                        <h3>Детайли за поръчка</h3>
 
-                                <form className="row contact_form">
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="firstName"
-                                            placeholder="Име"
-                                            value={shippingData.firstName}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
+                        <form className="row contact_form" onSubmit={handleCheckout}>
 
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="lastName"
-                                            placeholder="Фамилия"
-                                            value={shippingData.lastName}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="phone"
-                                            placeholder="Телефон"
-                                            value={shippingData.phone}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            name="email"
-                                            placeholder="Имейл"
-                                            value={shippingData.email}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-12 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="address"
-                                            placeholder="Адрес"
-                                            value={shippingData.address}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="city"
-                                            placeholder="Град/Село"
-                                            value={shippingData.city}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-
-                                    <div className="col-md-6 form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="zip"
-                                            placeholder="Пощенски код"
-                                            value={shippingData.zip}
-                                            onChange={onChangeHandler}
-                                        />
-                                    </div>
-                                </form>
+                            <div className="col-md-6 form-group">
+                                <input type="text" name="firstName" placeholder="Име"
+                                    value={shippingData.firstName}
+                                    onChange={onChangeHandler}
+                                    className="form-control" />
                             </div>
 
-                            <div className="col-lg-4">
-                                <div className="order_box">
-                                    <h2>Вашата поръчка</h2>
+                            <div className="col-md-6 form-group">
+                                <input type="text" name="lastName" placeholder="Фамилия"
+                                    value={shippingData.lastName}
+                                    onChange={onChangeHandler}
+                                    className="form-control" />
+                            </div>
 
-                                    <ul className="list">
-                                        <li>
-                                            <a href="#">
-                                                Продукт
-                                                <span>Общо</span>
-                                            </a>
-                                        </li>
+                            <div className="col-md-12 form-group">
+                                <input type="email" name="email" placeholder="Имейл"
+                                    value={shippingData.email}
+                                    onChange={onChangeHandler}
+                                    className="form-control" />
+                            </div>
 
-                                        {cartItems.map(item => (
-                                            <li key={item.id}>
-                                                <a href="#">
-                                                    {item.productName}
-                                                    <span className="middle">x {item.quantity}</span>
-                                                    <span className="last">
-                                                        € {Number(item.price) * Number(item.quantity)}
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ul>
+                            {/* PAYMENT */}
+                            <div className="col-md-12 mt-4">
+                                <h4>Начин на плащане</h4>
 
-                                    <ul className="list list_2">
-                                        <li>
-                                            <a href="#">Цена за продуктите <span>€ {subtotal}</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Доставка <span>€ {shipping}</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Общо <span>€ {total}</span></a>
-                                        </li>
-                                    </ul>
+                                <div className="border rounded p-3">
 
-                                    <a
-                                        className="main_btn"
-                                        href="#"
-                                        onClick={handleCheckout}
-                                        style={{
-                                            pointerEvents: isSubmitting ? "none" : "auto",
-                                            opacity: isSubmitting ? 0.6 : 1
-                                        }}
-                                    >
-                                        {isSubmitting ? "Зареждане..." : "Завършване на поръчка"}
-                                    </a>
+
+                                    <div className="mt-3 p-3 bg-light rounded border">
+                                        <h5>Данни за банков превод</h5>
+
+                                        <p><strong>Получател:</strong> My Company Ltd</p>
+                                        <p><strong>Банка:</strong> DSK Bank</p>
+                                        <p><strong>IBAN:</strong> BG12STSA93000012345678</p>
+                                        <p><strong>BIC:</strong> STSABGSF</p>
+                                        <p>
+                                            <strong>Основание:</strong> {orderNumber}
+                                        </p>
+
+                                        <small className="text-muted">
+                                            Моля, въведете точно основанието за плащане,
+                                            за да обработим поръчката Ви по-бързо.
+                                        </small>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
+
+                            <div className="col-md-12 mt-4">
+                                <button
+                                    type="submit"
+                                    className="main_btn w-100"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? "Обработване..." : `Завърши поръчката (€ ${total.toFixed(2)})`}
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
+
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 }

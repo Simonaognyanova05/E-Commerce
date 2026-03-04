@@ -24,8 +24,8 @@ export default function Home() {
                         <div className="banner_content row">
                             <div className="col-lg-12">
                                 <p className="sub text-uppercase">НАШИЯТ НОВ ОНЛАЙН МАГАЗИН</p>
-                                <h3><span>ЗА</span> ВСЕКИ <br />ПО <span>НЕЩО</span></h3>
-                                <h4>Намерете всичко необходимо - от детски играчки, до домакински уреди, инструменти и градински мебели.</h4>
+                                <h3><span>УЧЕБНИ</span> МАТЕРИАЛИ <br />ЗА ВСЯКА <span>ВЪЗРАСТ</span></h3>
+                                <h4>Намерете всичко необходимо - от материали за преподаване, до лекции в университета и подготовка за интервю.</h4>
                                 <Link className="main_btn mt-40" to="/shop">Вижте каталога ни</Link>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ export default function Home() {
 
                     <div className="row">
                         {product.map(x => <ProductItem key={x.id} item={x} />)}
-                        
+
                     </div>
                 </div>
             </section>
