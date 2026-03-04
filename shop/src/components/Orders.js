@@ -87,7 +87,7 @@ export default function Orders() {
                                                     <td>{order.id}</td>
                                                     <td>{order.email}</td>
                                                     <td>{formatDate(order.createdAt)}</td>
-                                                    <td>€ {order.total}</td>
+                                                    <td>€ {order.subtotal}</td>
                                                     <td>
                                                         {order.status === "pending" && (
                                                             <span className="badge badge-warning">
@@ -110,22 +110,7 @@ export default function Orders() {
                                                         <div style={{ fontSize: "14px", lineHeight: "1.4" }}>
                                                             <strong>Инфо за доставка</strong>
                                                             <br />
-
-                                                            {order.shippingData ? (
-                                                                <>
-                                                                    {order.shippingData.firstName} {order.shippingData.lastName}
-                                                                    <br />
-                                                                    {order.shippingData.phone}
-                                                                    <br />
-                                                                    {order.shippingData.address}
-                                                                    <br />
-                                                                    {order.shippingData.city}, {order.shippingData.zip}
-                                                                </>
-                                                            ) : (
-                                                                <span>-</span>
-                                                            )}
-
-                                                            <hr />
+                                                            <br />
 
                                                             {order.status === "pending" ? (
                                                                 <>
