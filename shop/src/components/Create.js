@@ -95,6 +95,15 @@ export default function Create() {
                                             required
                                         />
                                     </div>
+                                    <div className="form-group mb-3">
+                                        <input
+                                            type="text"
+                                            name="link"
+                                            className="form-control"
+                                            placeholder="Линк към продукт"
+                                            required
+                                        />
+                                    </div>
 
                                     <div className="form-group text-center">
                                         <button

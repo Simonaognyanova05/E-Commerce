@@ -11,6 +11,8 @@ export async function createProduct(productData) {
             img1: productData.img1,
             img2: productData.img2,
             img3: productData.img3,
+            link: productData.link,
+
             createdAt: new Date()
         });
 

@@ -146,9 +146,8 @@ export default function Checkout() {
                                         <div className="mt-3 p-3 bg-light rounded border">
                                             <h5>Данни за банков превод</h5>
 
-                                            <p><strong>Получател:</strong> My Company Ltd</p>
                                             <p><strong>Банка:</strong> DSK Bank</p>
-                                            <p><strong>IBAN:</strong> BG12STSA93000012345678</p>
+                                            <p><strong>IBAN:</strong> BG46STSA93000030986203</p>
                                             <p><strong>BIC:</strong> STSABGSF</p>
                                             <p>
                                                 <strong>Основание:</strong> {orderNumber}
