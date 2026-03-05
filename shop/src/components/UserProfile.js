@@ -13,7 +13,6 @@ export default function UserProfile() {
 
         const fetchOrders = async () => {
             try {
-                // Взимаме ВСИЧКИ поръчки на потребителя
                 const q = query(
                     collection(db, "orders"),
                     where("userId", "==", user.uid)
@@ -26,16 +25,8 @@ export default function UserProfile() {
                         id: doc.id,
                         ...doc.data()
                     }))
-                    // филтрираме в кода
-                    .filter(order =>
-                        order.status === "paid" ||
-                        order.status === "completed"
-                    )
-                    // сортиране
-                    .sort((a, b) =>
-                        (b.createdAt?.seconds || 0) -
-                        (a.createdAt?.seconds || 0)
-                    );
+                    .filter(order => order.status === "paid" || order.status === "completed")
+                    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
                 setOrders(userOrders);
             } catch (err) {
@@ -48,58 +39,85 @@ export default function UserProfile() {
         fetchOrders();
     }, [user]);
 
+    const formatDate = (timestamp) => {
+        if (!timestamp?.seconds) return "-";
+        return new Date(timestamp.seconds * 1000).toLocaleDateString();
+    };
+
     if (!user) {
-        return <p style={{ textAlign: "center" }}>Моля, влезте в профила си</p>;
+        return <p className="text-center mt-5">Моля, влезте в профила си</p>;
     }
 
     if (loading) {
-        return <p style={{ textAlign: "center" }}>Зареждане...</p>;
+        return <p className="text-center mt-5">Зареждане...</p>;
     }
 
     return (
         <section className="section_gap">
             <div className="container">
-                <h2 className="mb-4">Моите закупени материали</h2>
+                <h2 className="mb-4 text-center">Моите закупени материали</h2>
 
                 {orders.length === 0 ? (
-                    <div className="alert alert-info">
+                    <div className="alert alert-info text-center">
                         Все още нямате платени поръчки.
                     </div>
                 ) : (
                     orders.map(order => (
-                        <div key={order.id} className="card mb-4 shadow-sm">
+                        <div key={order.id} className="card mb-4 shadow-sm border-0">
+                            <div className="card-header d-flex justify-content-between align-items-center bg-light">
+                                <h5 className="mb-0">
+                                    Поръчка: {order.orderNumber || order.id}
+                                </h5>
+                                <span
+                                    className={`badge ${
+                                        order.status === "completed"
+                                            ? "bg-primary"
+                                            : "bg-success"
+                                    }`}
+                                >
+                                    {order.status === "completed" ? "Доставена" : "Платена"}
+                                </span>
+                            </div>
+
                             <div className="card-body">
+                                <p className="text-muted mb-3">
+                                    Дата на поръчка: {formatDate(order.createdAt)}
+                                </p>
 
-                                <div className="d-flex justify-content-between mb-2">
-                                    <h5>Поръчка: {order.orderNumber || order.id}</h5>
-
-                                    <span className="badge bg-success">
-                                        {order.status === "completed"
-                                            ? "Доставена"
-                                            : "Платена"}
-                                    </span>
-                                </div>
-
-                                <ul className="list-group">
+                                <ul className="list-group mb-3">
                                     {order.items?.map((item, index) => (
                                         <li
                                             key={index}
-                                            className="list-group-item d-flex justify-content-between"
+                                            className="list-group-item d-flex justify-content-between align-items-center flex-column flex-md-row"
                                         >
-                                            <span>
-                                                {item.productName} x {item.quantity}
-                                            </span>
-                                            <span>
+                                            <div>
+                                                <strong>{item.productName}</strong>
+                                                <div className="text-muted" style={{ fontSize: "0.85rem" }}>
+                                                    Количество: {item.quantity}
+                                                </div>
+                                            </div>
+
+                                            {item.link && (
+                                                <a
+                                                    href={item.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="btn btn-primary btn-sm mt-2 mt-md-0"
+                                                >
+                                                    Виж продукта
+                                                </a>
+                                            )}
+
+                                            <span className="mt-2 mt-md-0">
                                                 € {(item.price * item.quantity).toFixed(2)}
                                             </span>
                                         </li>
                                     ))}
                                 </ul>
 
-                                <div className="text-end mt-3 fw-bold">
+                                <div className="text-end fw-bold fs-5">
                                     Общо: € {order.subtotal?.toFixed(2)}
                                 </div>
-
                             </div>
                         </div>
                     ))

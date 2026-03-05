@@ -16,6 +16,7 @@ export default function Edit() {
         img1: "",
         img2: "",
         img3: "",
+        link: "",
     });
 
     useEffect(() => {
@@ -119,6 +120,16 @@ export default function Edit() {
                                         className="form-control"
                                         placeholder="Линк към снимка 3"
                                         defaultValue={product.img3}
+                                        required
+                                    />
+                                </div>
+                                  <div className="form-group mb-3">
+                                    <input
+                                        type="text"
+                                        name="link"
+                                        className="form-control"
+                                        placeholder="Линк към материалите"
+                                        defaultValue={product.link}
                                         required
                                     />
                                 </div>

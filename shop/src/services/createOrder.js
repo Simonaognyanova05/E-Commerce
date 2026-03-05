@@ -32,6 +32,8 @@ export const createOrder = async ({
             price: Number(item.price),
             quantity: Number(item.quantity),
             img: item.img || "",
+            link: item.link || "",
+
         })),
 
         subtotal: parsedSubtotal,

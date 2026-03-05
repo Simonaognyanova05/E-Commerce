@@ -39,6 +39,7 @@ export const addToCart = async (userId, product, quantity) => {
         productName: product.productName,
         price: product.price,
         img: product.img1,
+        link: product.link,
         quantity,
         createdAt: serverTimestamp(),
     });

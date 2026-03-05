@@ -83,7 +83,44 @@ export default function Shop() {
 
             <section className="cat_product_area section_gap">
                 <div className="container">
-                    <div className="row flex-row-reverse">
+                    <div className="row">
+                        {/* SIDEBAR */}
+                        <div className="col-lg-3">
+                            <aside className="left_widgets p_filter_widgets">
+                                <div className="l_w_title">
+                                    <h3>Категории</h3>
+                                </div>
+                                <div className="widgets_inner">
+                                    <ul className="list">
+                                        <li>
+                                            <label className="radio-item">
+                                                <input
+                                                    type="radio"
+                                                    name="category"
+                                                    checked={selectedCategory === "all"}
+                                                    onChange={() => setSelectedCategory("all")}
+                                                />
+                                                <span>Всички</span>
+                                            </label>
+                                        </li>
+
+                                        {categories.map(cat => (
+                                            <li key={cat}>
+                                                <label className="radio-item">
+                                                    <input
+                                                        type="radio"
+                                                        name="category"
+                                                        checked={selectedCategory === cat}
+                                                        onChange={() => setSelectedCategory(cat)}
+                                                    />
+                                                    <span>{cat}</span>
+                                                </label>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </aside>
+                        </div>
 
                         {/* PRODUCTS */}
                         <div className="col-lg-9">
@@ -148,43 +185,6 @@ export default function Shop() {
                             </div>
                         </div>
 
-                        {/* SIDEBAR */}
-                        <div className="col-lg-3">
-                            <aside className="left_widgets p_filter_widgets">
-                                <div className="l_w_title">
-                                    <h3>Категории</h3>
-                                </div>
-                                <div className="widgets_inner">
-                                    <ul className="list">
-                                        <li>
-                                            <label className="radio-item">
-                                                <input
-                                                    type="radio"
-                                                    name="category"
-                                                    checked={selectedCategory === "all"}
-                                                    onChange={() => setSelectedCategory("all")}
-                                                />
-                                                <span>Всички</span>
-                                            </label>
-                                        </li>
-
-                                        {categories.map(cat => (
-                                            <li key={cat}>
-                                                <label className="radio-item">
-                                                    <input
-                                                        type="radio"
-                                                        name="category"
-                                                        checked={selectedCategory === cat}
-                                                        onChange={() => setSelectedCategory(cat)}
-                                                    />
-                                                    <span>{cat}</span>
-                                                </label>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </aside>
-                        </div>
 
                     </div>
                 </div>

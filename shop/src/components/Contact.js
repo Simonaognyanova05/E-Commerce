@@ -1,19 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import {sendMessage} from "../services/sendMessage";
+import { sendMessage } from "../services/sendMessage";
 
 export default function Contact() {
     const navigate = useNavigate();
-    
-    const submitHandler = async(e) => {
+
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        const {message, name, email, subject} = Object.fromEntries(formData);
-        
-        
+        const { message, name, email, subject } = Object.fromEntries(formData);
+
+
         let result = await sendMessage(message, name, email, subject);
 
-        if(result.status === 200){
+        if (result.status === 200) {
             alert("Съобщението е изпратено успешно!");
             navigate('/');
         }
@@ -85,14 +85,6 @@ export default function Contact() {
                                     Изпрати
                                 </button>
                             </form>
-                        </div>
-
-                        <div className="col-lg-4">
-                            <div className="media contact-info">
-                                <div className="media-body">
-                                    <h3>София, България</h3>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

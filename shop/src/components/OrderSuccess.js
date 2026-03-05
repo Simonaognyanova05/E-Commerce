@@ -41,7 +41,7 @@ export default function OrderSuccess() {
                                 </p>
 
                                 <p style={{ fontSize: "15px", marginBottom: "20px" }}>
-                                    Ще получите имейл с подробности за поръчката и информация за доставката.
+                                    След като проверим плащането, ще намерите материалите във вашия профил!
                                 </p>
 
                                 <p style={{ fontSize: "14px", color: "#777" }}>
