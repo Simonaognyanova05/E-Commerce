@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import HelmetComponent from "./HelmetComponent";
 
 export default function OrderSuccess() {
     return (
         <>
+            <HelmetComponent title="Успешна поръчка" />
+
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

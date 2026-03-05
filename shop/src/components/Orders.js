@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllOrders } from "../services/getAllOrders";
 import { updateOrderStatus } from "../services/updateOrderStatus";
+import HelmetComponent from "./HelmetComponent";
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
@@ -44,6 +45,8 @@ export default function Orders() {
 
     return (
         <>
+            <HelmetComponent title="Поръчки" />
+
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

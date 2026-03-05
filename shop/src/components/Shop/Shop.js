@@ -2,6 +2,7 @@ import "./Shop.css";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/getProducts";
 import ShopItem from "./ShopItem";
+import HelmetComponent from '../HelmetComponent';
 
 export default function Shop() {
     const [products, setProducts] = useState([]);
@@ -70,6 +71,8 @@ export default function Shop() {
 
     return (
         <>
+        <HelmetComponent title="Каталог"/>
+        
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

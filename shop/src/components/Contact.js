@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../services/sendMessage";
+import HelmetComponent from "./HelmetComponent";
 
 export default function Contact() {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Contact() {
     }
     return (
         <>
+        <HelmetComponent title="Контакти" />
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

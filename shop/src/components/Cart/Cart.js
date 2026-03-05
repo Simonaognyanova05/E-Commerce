@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { getUserCart } from "../../services/getUserCart";
 import { deleteCartItem } from "../../services/deleteCartItem";
+import HelmetComponent from "../HelmetComponent";
 
 export default function Cart() {
     const { user } = useAuth();
@@ -40,6 +41,7 @@ export default function Cart() {
 
     return (
         <>
+        <HelmetComponent title="Количка"/>
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

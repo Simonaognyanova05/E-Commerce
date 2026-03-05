@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ProductItem from './ProductItem';
 import { useEffect, useState } from 'react';
 import { getLastThreeProducts } from '../../services/getLastThreeProducts';
+import HelmetComponent from '../HelmetComponent';
 
 export default function Home() {
     const [product, setProduct] = useState([]);
@@ -18,6 +19,8 @@ export default function Home() {
 
     return (
         <>
+        <HelmetComponent title="Учебни материали" />
+
             <section className="home_banner_area mb-40">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">

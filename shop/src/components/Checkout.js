@@ -4,6 +4,7 @@ import { getUserCart } from "../services/getUserCart";
 import { createOrder } from "../services/createOrder";
 import { clearUserCart } from "../services/clearUserCart";
 import { useNavigate } from "react-router-dom";
+import HelmetComponent from "./HelmetComponent";
 
 export default function Checkout() {
     const navigate = useNavigate();
@@ -103,78 +104,81 @@ export default function Checkout() {
     };
 
     return (
-        <section className="checkout_area section_gap">
-            <div className="container">
-                <div className="row">
+        <>
+        <HelmetComponent title="Завършване на поръчка" />
+            <section className="checkout_area section_gap">
+                <div className="container">
+                    <div className="row">
 
-                    <div className="col-lg-8">
-                        <h3>Детайли за поръчка</h3>
+                        <div className="col-lg-8">
+                            <h3>Детайли за поръчка</h3>
 
-                        <form className="row contact_form" onSubmit={handleCheckout}>
+                            <form className="row contact_form" onSubmit={handleCheckout}>
 
-                            <div className="col-md-6 form-group">
-                                <input type="text" name="firstName" placeholder="Име"
-                                    value={shippingData.firstName}
-                                    onChange={onChangeHandler}
-                                    className="form-control" />
-                            </div>
-
-                            <div className="col-md-6 form-group">
-                                <input type="text" name="lastName" placeholder="Фамилия"
-                                    value={shippingData.lastName}
-                                    onChange={onChangeHandler}
-                                    className="form-control" />
-                            </div>
-
-                            <div className="col-md-12 form-group">
-                                <input type="email" name="email" placeholder="Имейл"
-                                    value={shippingData.email}
-                                    onChange={onChangeHandler}
-                                    className="form-control" />
-                            </div>
-
-                            {/* PAYMENT */}
-                            <div className="col-md-12 mt-4">
-                                <h4>Начин на плащане</h4>
-
-                                <div className="border rounded p-3">
-
-
-                                    <div className="mt-3 p-3 bg-light rounded border">
-                                        <h5>Данни за банков превод</h5>
-
-                                        <p><strong>Получател:</strong> My Company Ltd</p>
-                                        <p><strong>Банка:</strong> DSK Bank</p>
-                                        <p><strong>IBAN:</strong> BG12STSA93000012345678</p>
-                                        <p><strong>BIC:</strong> STSABGSF</p>
-                                        <p>
-                                            <strong>Основание:</strong> {orderNumber}
-                                        </p>
-
-                                        <small className="text-muted">
-                                            Моля, въведете точно основанието за плащане,
-                                            за да обработим поръчката Ви по-бързо.
-                                        </small>
-                                    </div>
-
+                                <div className="col-md-6 form-group">
+                                    <input type="text" name="firstName" placeholder="Име"
+                                        value={shippingData.firstName}
+                                        onChange={onChangeHandler}
+                                        className="form-control" />
                                 </div>
-                            </div>
 
-                            <div className="col-md-12 mt-4">
-                                <button
-                                    type="submit"
-                                    className="main_btn w-100"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? "Обработване..." : `Завърши поръчката (€ ${total.toFixed(2)})`}
-                                </button>
-                            </div>
+                                <div className="col-md-6 form-group">
+                                    <input type="text" name="lastName" placeholder="Фамилия"
+                                        value={shippingData.lastName}
+                                        onChange={onChangeHandler}
+                                        className="form-control" />
+                                </div>
 
-                        </form>
+                                <div className="col-md-12 form-group">
+                                    <input type="email" name="email" placeholder="Имейл"
+                                        value={shippingData.email}
+                                        onChange={onChangeHandler}
+                                        className="form-control" />
+                                </div>
+
+                                {/* PAYMENT */}
+                                <div className="col-md-12 mt-4">
+                                    <h4>Начин на плащане</h4>
+
+                                    <div className="border rounded p-3">
+
+
+                                        <div className="mt-3 p-3 bg-light rounded border">
+                                            <h5>Данни за банков превод</h5>
+
+                                            <p><strong>Получател:</strong> My Company Ltd</p>
+                                            <p><strong>Банка:</strong> DSK Bank</p>
+                                            <p><strong>IBAN:</strong> BG12STSA93000012345678</p>
+                                            <p><strong>BIC:</strong> STSABGSF</p>
+                                            <p>
+                                                <strong>Основание:</strong> {orderNumber}
+                                            </p>
+
+                                            <small className="text-muted">
+                                                Моля, въведете точно основанието за плащане,
+                                                за да обработим поръчката Ви по-бързо.
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="col-md-12 mt-4">
+                                    <button
+                                        type="submit"
+                                        className="main_btn w-100"
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? "Обработване..." : `Завърши поръчката (€ ${total.toFixed(2)})`}
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }

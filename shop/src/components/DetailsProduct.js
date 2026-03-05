@@ -7,6 +7,7 @@ import { getProductById } from "../services/getProductById";
 import { addToCart } from "../services/addToCart";
 import { useAuth } from "../contexts/AuthContext";
 import { checkIfAdmin } from "../services/checkIfAdmin";
+import HelmetComponent from "./HelmetComponent";
 
 export default function DetailsProduct() {
     const navigate = useNavigate();
@@ -78,6 +79,8 @@ export default function DetailsProduct() {
 
     return (
         <>
+            <HelmetComponent title="Подробности за продукт" />
+
             {/* ===== Banner ===== */}
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">

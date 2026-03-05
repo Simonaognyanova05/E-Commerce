@@ -1,3 +1,4 @@
+import  HelmetComponent from '../HelmetComponent.js';
 import { useEffect, useState } from "react";
 import { getMessages } from "../../services/getMessages";
 import { deleteMessage } from "../../services/deleteMessage";
@@ -38,6 +39,8 @@ export default function AdminMessages() {
 
     return (
         <>
+            <HelmetComponent title="Админ - съобщения" />
+
             <section className="banner_area">
                 <div className="banner_inner d-flex align-items-center">
                     <div className="container">
