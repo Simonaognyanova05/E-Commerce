@@ -1,9 +1,9 @@
 import { db } from '../config/firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 
-export async function getMessages() {
+export async function getBlogs() {
     try {
-        const q = query(collection(db, "messages"));
+        const q = query(collection(db, "blogs"));
         const querySnapshot = await getDocs(q);
 
         const products = [];
@@ -13,7 +13,7 @@ export async function getMessages() {
 
         return products;
     } catch (error) {
-        console.error("Грешка при извличане на съобщенията: ", error);
+        console.error("Грешка при извличане на статиите: ", error);
         return [];
     }
 }

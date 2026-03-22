@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home/Home";
 import Footer from "./components/Footer";
-import Blog from "./components/Blog";
+import Blog from "./components/Blog/Blog";
 import Cart from "./components/Cart/Cart";
 import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
@@ -35,7 +35,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/elements" element={<Elements />} />
-        <Route path="/detailsBlog" element={<DetailsBlog />} />
+        <Route path="/details/:id" element={<DetailsBlog />} />
         <Route path="/createBlog" element={<CreateBlog />} />
         <Route path="/product/:productId" element={<DetailsProduct />} />
         <Route path="/editProduct/:id" element={<Edit />} />
