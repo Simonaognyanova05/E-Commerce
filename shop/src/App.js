@@ -20,6 +20,7 @@ import OrderSuccess from "./components/OrderSuccess";
 import Orders from "./components/Orders";
 import AdminMessages from "./components/AdminMessages/AdminMessages";
 import UserProfile from "./components/UserProfile";
+import CreateBlog from "./components/CreateBlog";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/elements" element={<Elements />} />
         <Route path="/detailsBlog" element={<DetailsBlog />} />
+        <Route path="/createBlog" element={<CreateBlog />} />
         <Route path="/product/:productId" element={<DetailsProduct />} />
         <Route path="/editProduct/:id" element={<Edit />} />
         <Route path="/tracking" element={<Tracking />} />

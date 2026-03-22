@@ -11,9 +11,13 @@ export default function Header() {
             <li className="nav-item">
                 <Link className="nav-link" to="/createProduct">Създаване</Link>
             </li>
+             <li className="nav-item">
+                <Link className="nav-link" to="/createBlog">Създаване на статия</Link>
+            </li>
             <li className="nav-item">
                 <Link className="nav-link" to="/orders">Поръчки</Link>
             </li>
+
             <li className="nav-item">
                 <Link className="nav-link" to="/adminMessages">Съобщения</Link>
             </li>
@@ -67,53 +71,42 @@ export default function Header() {
                             <span className="icon-bar"></span>
                         </button>
                         <div className="collapse navbar-collapse offset w-100" id="navbarSupportedContent">
-                            <div className="row w-100 mr-0">
-                                <div className="col-lg-7 pr-0">
-                                    <ul className="nav navbar-nav center_nav pull-right">
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="/">Начало</Link>
-                                        </li>
+
+                            <ul className="navbar-nav ml-auto align-items-center">
+                                <li className="nav-item active">
+                                    <Link className="nav-link" to="/">Начало</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/shop">Продукти</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/blog">Блог</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/contact">Контакти</Link>
+                                </li>
+                                {Boolean(user.email) ? logged : unlogged}
+                                {isAdmin ? adminLogged : ""}
+
+                            </ul>
+                        </div>
+
+                        <div className="col-lg-5 pr-0">
+                            <ul className="nav navbar-nav navbar-right right_nav pull-right">
+                                {
+                                    Boolean(user.email)
+                                        ?
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="/shop">Продукти</Link>
+                                            <Link to="/cart" className="icons">
+                                                <i className="ti-shopping-cart"></i>
+                                            </Link>
                                         </li>
-                                        {/* <li className="nav-item submenu dropdown">
-                                            <Link to="/blog" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                aria-expanded="false">Blog</Link>
-                                            <ul className="dropdown-menu">
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/blog">Blog</Link>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <Link className="nav-link" to="/detailsBlog">Blog Details</Link>
-                                                </li>
-                                            </ul>
-                                        </li> */}
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="/contact">Контакти</Link>
-                                        </li>
-                                        {Boolean(user.email) ? logged : unlogged}
-                                        {isAdmin ? adminLogged : ""}
-
-                                    </ul>
-                                </div>
-
-                                <div className="col-lg-5 pr-0">
-                                    <ul className="nav navbar-nav navbar-right right_nav pull-right">
-                                        {
-                                            Boolean(user.email)
-                                                ?
-                                                <li className="nav-item">
-                                                    <Link to="/cart" className="icons">
-                                                        <i className="ti-shopping-cart"></i>
-                                                    </Link>
-                                                </li>
-                                                : ""
-                                        }
+                                        : ""
+                                }
 
 
-                                    </ul>
-                                </div>
-                            </div>
+                            </ul>
+
                         </div>
                     </nav>
                 </div>
